@@ -1,0 +1,674 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!--adaptation-->
+  
+  <title>CONTINUUM — Employee Access</title>
+  <link rel="stylesheet" href="main.css">
+  <script src="stage_layout.js" defer></script>
+  <script src="vendor/supabase.js" defer></script>
+  <script src="supabase_config.js" defer></script>
+  <script src="supabase_sync.js" defer></script>
+  <script src="behaviour_tracking.js" defer></script>
+  <script src="ball_game.js" defer></script>
+  <script src="classification.js" defer></script>
+  <script src="assistant_advice.js" defer></script>
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrambleTextPlugin.min.js" defer></script>
+  <script src="ghost_example.js" defer></script>
+  <script src="profile_view.js" defer></script>
+  <script src="app.js" defer></script> <!--Bug fixes-->
+</head>
+
+<body>
+
+  <!--fixed stage-->
+  <div id="stageViewport">
+    <main id="application">
+
+      <!--loginPage-->
+      <section id="login_page" class="page login_page" aria-label="Employee access" data-figma="38:261">
+        <header class="access-header">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/access/brand-frame.svg" alt=""><img src="assets/access/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="access-network">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>PEOPLE. KNOWLEDGE. CONTINUITY.</p>
+          </div>
+          <div class="access-version">
+            <p>SYSTEM / V1.0</p><p>EMPLOYEE SERVICES</p>
+          </div>
+          <div class="access-terminal"><strong>01</strong><span>ACCESS<br>TERMINAL</span></div>
+        </header>
+
+        <div class="access-grid">
+          <div class="access-hero">
+            <div class="access-panel-label"><span>■  PERSONNEL INTERFACE</span><span>SECURE ENTRY / 001</span></div>
+            <h1>
+              <span class="access-title-line"><span class="access-title-text">EMPLOYEE</span></span>
+              <span class="access-title-line"><span class="access-title-text">ACCESS<span class="access-period">.</span></span></span>
+            </h1>
+            <p class="access-tagline">Your knowledge.<br>Our collective future.</p>
+            <img class="access-hero-arrow" src="assets/access/hero-arrow.svg" alt="">
+            <div class="access-panel-foot"><span>KNOWLEDGE STARTS WITH YOU</span><span>[ E—01 ]</span></div>
+          </div>
+
+          <div class="access-portal">
+            <div class="access-panel-label"><span>01 / EMPLOYEE PORTAL</span><img src="assets/access/field-arrow.svg" alt=""></div>
+            <h2 class="access-title-line"><span class="access-slide-text">Employee Login</span></h2>
+            <p class="access-description access-title-line"><span class="access-slide-text">Enter your credentials to access the Employee Services.</span></p>
+            <form id="login_form" class="login_form">
+              <div class="access-input-label"><label for="employee_id">EMAIL</label><span aria-hidden="true">01</span></div>
+              <div class="access-input-icon">
+                <input id="employee_id" name="employeeId" type="email" autocomplete="username" placeholder="name@example.com" required aria-describedby="login_message">
+                <img src="assets/access/field-arrow.svg" alt="">
+              </div>
+              <div class="access-input-label"><label for="access_code">ACCESS CODE</label><span aria-hidden="true">02</span></div>
+              <div class="access-input-icon">
+                <input id="access_code" name="accessCode" type="password" autocomplete="current-password" placeholder="Enter access code" required>
+                <img src="assets/access/field-arrow.svg" alt="">
+              </div>
+              <button class="access-action login_submit" type="submit" aria-label="Log in">LOGIN <span aria-hidden="true">→</span></button>
+              <p id="login_message" class="form_message" role="status"></p>
+            </form>
+          </div>
+
+          <div class="access-system">
+            <div class="access-panel-label"><span>SYSTEM STATUS</span><img src="assets/access/system-bars.svg" alt=""></div>
+            <p class="access-active"><span>ACTIVE</span></p>
+            <div class="access-panel-foot"><span>KNOWLEDGE NETWORK / ONLINE</span><span>● ALL SYSTEMS NOMINAL</span></div>
+          </div>
+          <div class="access-onboarding">
+            <div class="access-panel-label"><span>NEW TO THE NETWORK?</span><span>02 / ONBOARDING</span></div>
+            <button id="createProfile" type="button">
+              <span class="access-title-line"><span class="access-create-label">CREATE NEW<br>EMPLOYEE</span></span><span aria-hidden="true">+</span>
+            </button>
+            <p>A new profile. A shared future.</p>
+          </div>
+        </div>
+
+        <footer class="access-footer">
+          <div class="access-metadata">
+            <p><span>NETWORK</span>CONTINUUM / INTERNAL</p>
+            <p><span>DATABASE</span>● SYNCHRONISED</p>
+            <p><span>SYSTEM TIME / UTC</span><time id="loginSystemTime">--:--:--</time></p>
+            <p class="access-index"><span class="access-barcode" aria-hidden="true"></span>UAL—067 / ACCESS</p>
+          </div>
+          <div class="access-legal">
+            <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+            <p>© KNOWLEDGE 2026 &nbsp; / &nbsp; INTERNAL USE ONLY</p>
+          </div>
+        </footer>
+      </section>
+
+      <!--work page-->
+      <section id="company_page" class="page company_page work-console" hidden aria-label="Classification work" data-figma="91:38">
+        <header class="work-masthead work-only">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/work/brand-frame.svg" alt=""><img src="assets/work/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register"><p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES / WORK</p></div>
+          <div class="work-masthead-register"><p>SYSTEM / V1.0</p><p>CLASSIFICATION TERMINAL</p></div>
+          <button id="workLogout" type="button">
+            <img src="assets/database/back-arrow.svg" alt="">LOG OUT
+          </button>
+          <div class="access-terminal"><strong>02</strong><span>WORK<br>TERMINAL</span></div>
+        </header>
+        <div class="work-chassis work-only" aria-hidden="true"></div>
+        <header class="work-titlebar work-only">
+          <p>02 / CLASSIFICATION TERMINAL</p>
+          <h1 class="access-title-line"><span class="access-title-text">CLASSIFY<span>.</span></span></h1>
+          <div class="work-order-header">
+            <h2 id="workOrderTitle" class="access-title-line"><span class="access-title-text"></span></h2>
+            <div>
+              <p id="workOrderTotal" class="access-title-line"><span class="access-title-text"></span></p>
+              <p>ORDER PROGRESS<br>GROUPS CLASSIFIED</p>
+            </div>
+          </div>
+        </header>
+
+        <!--task panel-->
+        <nav class="taskPanel" aria-label="Work stages">
+          <div class="work-docket work-only" aria-hidden="true">
+            <p class="access-title-line"><span class="access-slide-text">ORDER</span></p>
+            <p id="workOrderNumber" class="access-title-line"><span class="access-slide-text"></span></p>
+          </div>
+          <h1>Task</h1>
+          <div class="taskButtons">
+            <button class="taskButton selected" data-stage="1" aria-pressed="true">01</button>
+            <button class="taskButton" data-stage="2" aria-pressed="false">02</button>
+            <button class="taskButton" data-stage="3" aria-pressed="false">03</button>
+          </div>
+        </nav>
+        <div class="work-order-plate work-only" aria-hidden="true">
+          <p>ORDER PROGRESS</p>
+          <p id="workOrderPlateTotal" class="access-title-line"><span class="access-slide-text"></span></p>
+          <p>GROUPS CLASSIFIED</p>
+        </div>
+
+        <!--company center-->
+        <div class="company_center">
+          <header class="profile_progress">
+            <h2>Profile Progress<span id="currentEmployee"></span></h2>
+            <div class="progress_track" role="progressbar" aria-label="Employee profile progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div class="progressFill"></div>
+            </div>
+            <p class="progress_label access-title-line"><span class="access-title-text">0%</span></p>
+          </header>
+
+          <!--work area-->
+          <section class="workPanel" aria-label="Work area">
+
+            <div id="gameWireframe" class="gameWireframe ballPrototypeActive ballClassificationActive" hidden>
+              <!--order-->
+              <header class="order">
+                <h2>Order Specification</h2>
+                <div class="order-counts" aria-label="Order counts">
+                  <div class="work-order-cell">
+                    <span>WW</span><span class="work-order-symbol" aria-hidden="true"><img src="assets/work/order-white.svg" alt=""><img src="assets/work/order-white.svg" alt=""></span>
+                    <span data-order="WW">—</span><span class="work-order-met" aria-hidden="true">MET</span>
+                  </div>
+                  <div class="work-order-cell">
+                    <span>BB</span><span class="work-order-symbol" aria-hidden="true"><img src="assets/work/order-black.svg" alt=""><img src="assets/work/order-black.svg" alt=""></span>
+                    <span data-order="BB">—</span><span class="work-order-met" aria-hidden="true">MET</span>
+                  </div>
+                  <div class="work-order-cell">
+                    <span>BW</span><span class="work-order-symbol" aria-hidden="true"><img src="assets/work/order-black.svg" alt=""><img src="assets/work/order-white.svg" alt=""></span>
+                    <span data-order="BW">—</span><span class="work-order-met" aria-hidden="true">MET</span>
+                  </div>
+                  <div class="work-order-cell">
+                    <span>W</span><span class="work-order-symbol" aria-hidden="true"><img src="assets/work/order-white.svg" alt=""></span>
+                    <span data-order="W">—</span><span class="work-order-met" aria-hidden="true">MET</span>
+                  </div>
+                  <div class="work-order-cell">
+                    <span>B</span><span class="work-order-symbol" aria-hidden="true"><img src="assets/work/order-black.svg" alt=""></span>
+                    <span data-order="B">—</span><span class="work-order-met" aria-hidden="true">MET</span>
+                  </div>
+                </div>
+              </header>
+
+              <!--ball prototype-->
+              <div class="ballPrototype">
+                <div class="ballToolbar">
+                  <h2>Classification Field</h2>
+                  <small id="ghostExampleLabel" hidden>Reconstructed Demonstration</small>
+                </div>
+
+                <!--ball Deformation-->
+                <svg id="ballPlayfield" class="ballPlayfield" viewBox="0 0 1000 800" width="908" height="489" preserveAspectRatio="none" aria-labelledby="ballGameTitle ballGameDescription">
+                  <title id="ballGameTitle">Black and white ball classification</title>
+                  <desc id="ballGameDescription">Drag one ball to split links. Hold Shift to move its connected group. Release the whole group inside a matching outlet or the staging box.</desc>
+                
+                  <g id="ballLinks"></g>
+                  <g id="ballCircles"></g>
+                  <g id="ghostDemo" aria-hidden="true" hidden>
+                    <g id="ghostPair" stroke="#181a17" stroke-width="3">
+                      <line x1="-25" x2="25" y1="0" y2="0"></line>
+                      <circle cx="-25" r="18" fill="#181a17"></circle>
+                      <circle cx="25" r="18" fill="white"></circle>
+                    </g>
+                    <g id="ghostCursor">
+                      <circle id="ghostGrip" r="16" fill="none" stroke="#181a17" stroke-width="3"></circle>
+                      <path d="M0 0 L5 35 L13 25 L22 39 L28 35 L19 21 L33 20 Z"
+                            fill="#181a17" stroke="white" stroke-width="2"></path>
+                    </g>
+                  </g>
+                </svg>
+
+                <div class="ballInstructions">
+                  <p>Drag a ball to break links. Hold <strong>Shift</strong> to move a connected group. Drop the group into a matching outlet.</p>
+                  <p id="orderCompletion" class="screenReaderOnly" role="status"></p>
+                  <p id="orderFeedback" role="status" aria-live="polite"></p>
+                  <p id="ballStatus" class="screenReaderOnly" role="status" aria-live="polite"></p>
+                </div>
+              </div>
+
+              <!--staging area-->
+              <div class="stagingArea">
+                <h3>Staging Area <span id="stagingCount">0 / 2</span></h3>
+                <div id="stagingDrop" aria-label="Staging receiving area"></div>
+              </div>
+              <!--sorting out-->
+              <div class="sortingOutlets" aria-label="Classification outlets">
+                <p class="work-outlet-title"><span>CLASSIFICATION OUTLETS</span><span>05 CHANNELS</span></p>
+                <div class="outletBorders">
+                  <span data-outlet="WW" aria-label="两个相连白球（WW）接收区">
+                    <img src="assets/work/outlet-ww.svg" alt=""><span aria-hidden="true">WW</span>
+                  </span>
+                  <span data-outlet="BB" aria-label="两个相连黑球（BB）接收区">
+                    <img src="assets/work/outlet-bb.svg" alt=""><span aria-hidden="true">BB</span>
+                  </span>
+                  <span data-outlet="BW" aria-label="一黑一白相连球组（BW 或 WB）接收区">
+                    <img src="assets/work/outlet-bw.svg" alt=""><span aria-hidden="true">BW</span>
+                  </span>
+                  <span data-outlet="W" aria-label="独立白球（W）接收区">
+                    <img src="assets/work/outlet-w.svg" alt=""><span aria-hidden="true">W</span>
+                  </span>
+                  <span data-outlet="B" aria-label="独立黑球（B）接收区">
+                    <img src="assets/work/outlet-b.svg" alt=""><span aria-hidden="true">B</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!--assistant area-->
+        <aside class="assistantPanel" aria-label="Assistant area C">
+          <h2 class="work-only">Assistant</h2>
+          <button id="openDatabase" class="databaseButton" aria-label="Open employee database">
+            <span class="work-only">EMPLOYEE DATABASE</span><img class="work-only work-action-arrow" src="assets/work/action-arrow.svg" alt="">
+          </button>
+          <section id="assistantAdvice" class="assistantAdvice" aria-label="Former employee advice" hidden>
+            <p class="work-assistant-kicker work-only">AI ADVICE</p>
+            <p id="advisorName"></p>
+            <p class="advisorRole">Former Employee / AI Advisor</p>
+            <p id="advisorMessage" role="status"></p>
+            <button id="showGhostExample" type="button" hidden>Replay <img class="work-only work-action-arrow" src="assets/work/action-arrow.svg" alt=""></button>
+            <p class="work-replay-caption work-only">RECONSTRUCTED DEMONSTRATION</p>
+          </section>
+          <p class="work-assistant-empty work-only">No contextual advice available.</p>
+        </aside>
+        <footer class="work-footer work-only">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>WORK / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+      <!--employee database-->
+      <section id="database_page" class="page database_page" hidden aria-label="Employee database" data-figma="101:208">
+        <header class="work-masthead rack-masthead rack-only">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/work/brand-frame.svg" alt=""><img src="assets/work/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES / ARCHIVE</p>
+          </div>
+          <p id="rackRecordMode" class="rack-record-mode">LIVE / EMPLOYEE RECORDS</p>
+          <button id="backToCompany" type="button" hidden>
+            <img src="assets/database/back-arrow.svg" alt="">BACK TO WORKSPACE
+          </button>
+          <div class="access-terminal"><strong>03</strong><span>ARCHIVE<br>TERMINAL</span></div>
+        </header>
+        <div class="rack-titlebar rack-only">
+          <p>03 / EMPLOYEE DATABASE</p>
+          <h1 class="access-title-line"><span class="access-title-text">MEMORY RACK.</span></h1>
+          <div class="rack-total">
+            <strong id="rackModuleCount" class="access-title-line"><span class="access-title-text">—</span></strong>
+            <p>MEMORY MODULES<br>ON RECORD</p>
+          </div>
+        </div>
+        <p id="formerArchiveListStatus" role="status" hidden></p>
+        <div id="employeeGrid" class="employeeGrid" role="region" aria-label="Employee archives"></div>
+        <div class="rack-access rack-only">
+          <p>ACCESS / ACTIVE EMPLOYEES</p>
+          <p>Former employees can view only their own profile.</p>
+          <p id="rackScrollHint" hidden>SCROLL FOR MORE MODULES →</p>
+          <button id="rackMyProfile" type="button">
+            <span>MY PROFILE <span id="rackOwnCode"></span></span><img src="assets/database/my-profile-arrow.svg" alt="">
+          </button>
+        </div>
+        <footer class="work-footer rack-footer rack-only">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>DATABASE / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+      <!--former employee portal-->
+      <section id="restricted_page" class="page portal-page" hidden aria-labelledby="portalTitle" data-figma="150:38">
+        <header class="work-masthead rack-masthead portal-masthead">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/access/brand-frame.svg" alt=""><img src="assets/access/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES / ARCHIVE</p>
+          </div>
+          <p id="portalRecordMode" class="portal-record-mode">ARCHIVE / PERSONAL RECORD</p>
+          <div class="access-terminal"><strong>07</strong><span>ARCHIVE<br>PORTAL</span></div>
+        </header>
+
+        <div class="portal-sheet">
+          <div class="portal-hero">
+            <h1 id="portalTitle" class="access-title-line"><span class="access-title-text">FORMER EMPLOYEE<span>.</span></span></h1>
+            <p>Your employment has ended. Your archive remains.</p>
+          </div>
+          <div class="portal-identity">
+            <dl>
+              <div><dt>EMPLOYEE NAME</dt><dd id="portalEmployeeName">—</dd></div>
+              <div><dt>EMPLOYEE ID</dt><dd id="portalEmployeeId">—</dd></div>
+              <div><dt>EMPLOYMENT STATUS</dt><dd id="portalEmploymentStatus">—</dd></div>
+            </dl>
+            <button id="portalLogout" type="button"><img src="assets/portal/logout-arrow.svg" alt="">LOG OUT</button>
+          </div>
+          <div class="portal-archive">
+            <div class="portal-access">
+              <p>ARCHIVE ACCESS / PERSONAL RECORD</p>
+              <h2 class="access-title-line"><span class="access-slide-text">READ ONLY.</span></h2>
+              <p>You can view your own record. Work and editing are unavailable.</p>
+            </div>
+            <div class="portal-archive-status">
+              <p>AI SELF-INTRODUCTION</p>
+              <p id="portalArchiveStatus" role="status">—</p>
+            </div>
+            <div class="portal-action">
+              <button id="viewMyArchive" type="button">VIEW MY ARCHIVE <span><img src="assets/portal/view-archive-arrow.svg" alt=""></span></button>
+            </div>
+          </div>
+        </div>
+        <footer class="work-footer rack-footer portal-footer">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>ARCHIVE PORTAL / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+      <!--employee profile-->
+      <section id="profile_page" class="page profile-page" hidden aria-labelledby="profileTitle" data-figma="116:153 / 152:38">
+        <header class="work-masthead rack-masthead profile-masthead">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/work/brand-frame.svg" alt=""><img src="assets/work/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES / PROFILE</p>
+          </div>
+          <button id="editRestrictedArchive" type="button" aria-haspopup="dialog" hidden>
+            EDIT RECORD <img src="assets/profile/edit-arrow.svg" alt="">
+          </button>
+          <p id="profileRecordMode" class="rack-record-mode">LIVE / EMPLOYEE RECORDS</p>
+          <button id="backFromProfile" type="button">
+            <img class="profile-database-arrow" src="assets/database/back-arrow.svg" alt="">
+            <img class="profile-portal-arrow" src="assets/profile/portal-arrow.svg" alt="" hidden>
+            <span>BACK TO DATABASE</span>
+          </button>
+          <div class="access-terminal"><strong>04</strong><span>PROFILE<br>TERMINAL</span></div>
+        </header>
+
+        <div class="profile-titlebar">
+          <p>04 / EMPLOYEE PROFILE</p>
+          <h1 id="profileTitle" class="access-title-line" tabindex="-1"><span class="access-title-text">MEMORY UNSEALED.</span></h1>
+          <div class="profile-rack-reference">
+            <p>MEMORY RACK / SLOT <span id="profileSlotReference">—</span></p>
+            <p>CLASSIFICATION PUNCH TAPE</p>
+          </div>
+        </div>
+
+        <div class="profile-chassis">
+          <div class="profile-identity">
+            <div class="profile-slot"><p>SLOT</p><strong id="profileSlotNumber">—</strong></div>
+            <div class="profile-name"><p>EMPLOYEE NAME</p><p id="profileEmployeeName" data-former-field="display_name">—</p></div>
+            <div class="profile-id"><p>EMPLOYEE ID</p><p id="profileEmployeeId" data-former-field="employee_code">—</p></div>
+            <div class="profile-employment">
+              <p>EMPLOYMENT STATUS</p>
+              <div><p id="profileEmployeeStatus" data-former-field="status">—</p><span id="profileStatusLight" aria-hidden="true"></span></div>
+              <p id="profileReadOnly" hidden>READ ONLY</p>
+            </div>
+            <div class="profile-serial" aria-hidden="true"><span></span><p id="profileSerial">—</p></div>
+          </div>
+
+          <section class="profile-labour" aria-labelledby="profileLabourTitle">
+            <header>
+              <h2 id="profileLabourTitle">01 / DOCUMENTED LABOUR</h2>
+              <p id="profileLoadStatus" role="status"></p>
+            </header>
+            <p id="profileTapeNote">CLASSIFICATION RESULTS</p>
+            <div id="profilePunchTape" aria-hidden="true"></div>
+            <dl class="profile-counts">
+              <div><dt>WORK SESSIONS</dt><dd data-profile="workSessions" data-former-field="work_sessions">—</dd></div>
+              <div><dt>LINKS BROKEN</dt><dd data-profile="link_broken" data-former-field="links_broken">—</dd></div>
+              <div><dt>GROUPS STAGED</dt><dd data-profile="group_staged" data-former-field="groups_staged">—</dd></div>
+              <div><dt>GROUPS RETRIEVED</dt><dd data-profile="group_retrieved" data-former-field="groups_retrieved">—</dd></div>
+              <div><dt>ORDERS COMPLETED</dt><dd data-profile="order_completed" data-former-field="orders_completed">—</dd></div>
+            </dl>
+            <dl class="profile-outcomes">
+              <div><dt>SUCCESSFUL<br>CLASSIFICATIONS</dt><dd data-profile="classification_success" data-former-field="classification_successes">—</dd></div>
+              <div><dt>CLASSIFICATION<br>ERRORS</dt><dd data-profile="classification_error" data-former-field="classification_errors">—</dd></div>
+            </dl>
+            <div id="profileRateRing" class="profile-rate" role="img" aria-label="Classification success rate unavailable">
+              <span id="profileSuccessRate">—</span>
+            </div>
+          </section>
+        </div>
+
+        <section id="digitalArchive" class="profile-introduction" aria-labelledby="aiIntroductionTitle">
+          <div class="profile-folio">
+            <p>AI-GENERATED IDENTITY</p>
+            <h2 id="aiIntroductionTitle" class="access-title-line"><span class="access-slide-text">AI Self-<br>Introduction</span></h2>
+            <p>GENERATED BY<strong>CONTINUUM AI</strong></p>
+            <p class="access-title-line" aria-hidden="true"><span class="access-slide-text">02</span></p>
+          </div>
+          <div class="profile-reading">
+            <header><p>COMPANY-GENERATED RECORD</p><p id="profileIntroSource"></p></header>
+            <h3 class="profile-intro-title access-title-line"><span class="access-title-text">WORK HISTORY ARCHIVED.</span></h3>
+            <div class="profile-reading-body" tabindex="0" aria-label="AI self-introduction">
+              <p id="aiArchiveStatus" role="status"></p>
+              <div class="profile-introduction-copy">
+                <p id="aiIntroduction" hidden></p>
+                <p id="formerIntroduction" data-former-field="introduction" hidden></p>
+                <p id="profileIntroductionMotion" aria-hidden="true" hidden></p>
+              </div>
+              <button id="retryAiArchive" type="button" hidden>Retry generation</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="profile-access-note">
+          <p id="profileAccessMode"></p>
+          <p id="profileProgressNote">Profile Progress <span data-profile="progress">—</span></p>
+          <p id="profileArchiveNote" hidden>Former employees can view only their own profile.</p>
+        </div>
+        <footer class="work-footer rack-footer">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>PROFILE / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+      <!--complete page-->
+      <section id="complete_page" class="page complete_page employment-page" hidden aria-labelledby="profileCompleteTitle" data-figma="122:38">
+        <header class="work-masthead rack-masthead employment-masthead">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/work/brand-frame.svg" alt=""><img src="assets/work/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES</p>
+          </div>
+          <div class="employment-system"><p>SYSTEM / V1.0</p><p>RECORD CONFIRMATION</p></div>
+          <div class="access-terminal"><strong>05</strong><span>PROFILE<br>TERMINAL</span></div>
+        </header>
+
+        <div class="employment-sheet">
+          <div class="employment-main completion-progress">
+            <div class="employment-register"><p>05 / PROFILE PROGRESS</p><p>COMPLETION</p></div>
+            <p class="completion-percent" role="progressbar" aria-label="Profile progress" aria-valuenow="100">100%</p>
+            <p class="employment-panel-end employment-indicator">ALL REQUIREMENTS MET.</p>
+          </div>
+          <div class="employment-side completion-confirmation">
+            <div class="employment-register"><p>EMPLOYEE PROFILE / CONFIRMATION</p></div>
+            <h1 id="profileCompleteTitle" class="access-title-line"><span class="access-title-text">PROFILE<br>COMPLETE.</span></h1>
+            <p class="completion-description">Your employee profile has been successfully completed.</p>
+            <p class="employment-panel-end">PROCESS COMPLETE</p>
+          </div>
+          <div class="employment-receipt">
+            <dl>
+              <div><dt>EMPLOYEE ID</dt><dd id="completeEmployeeId">—</dd></div>
+              <div><dt>KNOWLEDGE RECORD</dt><dd>FINALIZED</dd></div>
+            </dl>
+            <div class="employment-receipt-action">
+              <button id="continueToTermination" type="button">CONTINUE <img src="assets/employment/continue-arrow.svg" alt=""></button>
+            </div>
+          </div>
+        </div>
+        <footer class="work-footer rack-footer employment-footer">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>RECORD CONFIRMATION / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+      <!--termination page-->
+      <section id="fired_page" class="page fired_page employment-page" hidden aria-labelledby="employmentTerminatedTitle" data-figma="125:38">
+        <header class="work-masthead rack-masthead employment-masthead">
+          <p class="access-brand"><span class="access-mark" aria-hidden="true">
+            <img src="assets/work/brand-frame.svg" alt=""><img src="assets/work/brand-center.svg" alt="">
+          </span>CONTINUUM <sup>®</sup></p>
+          <div class="work-masthead-register">
+            <p>INTERNAL KNOWLEDGE SYSTEM</p><p>EMPLOYEE SERVICES</p>
+          </div>
+          <div class="employment-system"><p>SYSTEM / V1.0</p><p>EMPLOYMENT STATUS</p></div>
+          <div class="access-terminal"><strong>06</strong><span>PROFILE<br>TERMINAL</span></div>
+        </header>
+
+        <div class="employment-sheet">
+          <div class="employment-main termination-notice">
+            <div class="employment-register"><p>06 / EMPLOYMENT STATUS</p><p>STATUS UPDATE</p></div>
+            <h1 id="employmentTerminatedTitle" class="access-title-line"><span class="access-title-text">EMPLOYMENT<br>TERMINATED.</span></h1>
+            <p class="termination-description">Your employment has ended. Your recorded work will remain<br>available to the company for operational continuity.</p>
+            <p class="employment-panel-end employment-indicator">EMPLOYMENT RECORD CLOSED</p>
+          </div>
+          <div class="employment-side termination-retention">
+            <div class="employment-register"><p>KNOWLEDGE RECORD / RETENTION</p></div>
+            <div class="termination-capture"><p>PROFILE CAPTURE / COMPLETE</p><strong>100%</strong></div>
+            <div class="termination-processing"><p>KNOWLEDGE PROCESSING</p><h2>STILL RUNNING.</h2></div>
+            <div class="termination-log">
+              <p>PREPARING KNOWLEDGE FOR REUSE…</p>
+              <div><p>COMPLETED LOG</p><p>CLASSIFICATION DATA RECORDED</p><p>WORK HISTORY COMPILED</p></div>
+            </div>
+            <p class="employment-panel-end">RECORDED WORK RETAINED</p>
+          </div>
+          <div class="employment-receipt">
+            <dl>
+              <div><dt>EMPLOYEE ID</dt><dd id="terminatedEmployeeId">—</dd></div>
+              <div><dt>KNOWLEDGE RECORD</dt><dd>FINALIZED</dd></div>
+            </dl>
+            <div class="employment-receipt-action">
+              <button id="signOutFromTermination" type="button">SIGN OUT <img src="assets/employment/sign-out-arrow.svg" alt=""></button>
+            </div>
+          </div>
+        </div>
+        <footer class="work-footer rack-footer employment-footer">
+          <p>CONTINUUM / INTERNAL</p>
+          <p>All employee activity may be recorded for organisational knowledge continuity.</p>
+          <p>EMPLOYMENT STATUS / INTERNAL USE ONLY</p>
+        </footer>
+      </section>
+
+    </main>
+  </div>
+
+  <!--create employee-->
+  <dialog id="createDialog" class="createDialog access-dialog" aria-labelledby="createTitle" data-figma="134:38">
+    <div class="onboard-cover">
+      <p class="onboard-eyebrow">EMPLOYEE ONBOARDING</p>
+      <p class="onboard-title">
+        <span class="access-title-line"><span class="access-title-text">NEW</span></span>
+        <span class="access-title-line"><span class="access-title-text">EMPLOYEE.</span></span>
+      </p>
+      <p class="onboard-description">Create your credentials for access to Employee Services.</p>
+      <p class="onboard-register">INTERNAL KNOWLEDGE SYSTEM</p>
+      <div class="onboard-intake">
+        <strong class="access-title-line"><span class="onboard-intake-title">NEW</span></strong>
+        <div><b>PERSONNEL<br>INTAKE</b><p>EMPLOYEE SERVICES</p></div>
+      </div>
+    </div>
+    <div class="onboard-sheet">
+      <header>
+        <p class="access-title-line"><span class="access-slide-text">REGISTRATION</span></p>
+        <h2 id="createTitle" class="access-title-line"><span class="access-slide-text">Create Employee</span></h2>
+        <button id="closeCreateProfile" class="closeButton" type="button" data-close aria-label="Close create profile">
+          <img src="assets/access/close.svg" alt="">
+        </button>
+      </header>
+      <form id="registrationForm" novalidate>
+        <div class="access-input-label"><label for="registrationEmail">EMAIL</label><span aria-hidden="true">01</span></div>
+        <input id="registrationEmail" type="email" autocomplete="email" placeholder="name@example.com" required autofocus>
+        <div class="access-input-label"><label for="registrationPassword">PASSWORD</label><span id="registrationPasswordHint">AT LEAST 8 CHARACTERS</span><span aria-hidden="true">02</span></div>
+        <input id="registrationPassword" type="password" autocomplete="new-password" placeholder="Enter password" minlength="8" aria-describedby="registrationPasswordHint" required>
+        <div class="access-input-label"><label for="registrationConfirm">CONFIRM PASSWORD</label><span aria-hidden="true">03</span></div>
+        <input id="registrationConfirm" type="password" autocomplete="new-password" placeholder="Re-enter password" required>
+        <div class="onboard-form-status"><p>FORM STATUS</p><p id="registrationMessage" class="form_message" role="status"></p></div>
+        <button class="access-action" type="submit">CREATE EMPLOYEE <img src="assets/access/submit-create.svg" alt=""></button>
+      </form>
+      <!--preview only-->
+      <dl id="registrationPreview" hidden>
+        <dt>Employee ID</dt>
+        <dd id="newEmployee_id">DEV Preview</dd>
+        <dt>Access Code</dt>
+        <dd>DEV Preview only</dd>
+      </dl>
+      <footer class="onboard-footer"><span>CONTINUUM / EMPLOYEE SERVICES</span><span>INTERNAL USE ONLY</span></footer>
+    </div>
+  </dialog>
+
+  <dialog id="employeeNameDialog" class="createDialog access-dialog" aria-labelledby="employeeNameTitle" data-figma="156:38">
+    <div class="onboard-cover">
+      <p class="onboard-eyebrow">EMPLOYEE ONBOARDING</p>
+      <p class="onboard-title">NEW<br>EMPLOYEE.</p>
+      <p class="onboard-description">Create your credentials for access to Employee Services.</p>
+      <p class="onboard-register">INTERNAL KNOWLEDGE SYSTEM</p>
+      <div class="onboard-intake"><strong>NEW</strong><div><b>PERSONNEL<br>INTAKE</b><p>EMPLOYEE SERVICES</p></div></div>
+    </div>
+    <div class="onboard-sheet">
+      <header>
+        <h2 id="employeeNameTitle">Choose Your Name</h2>
+        <p>Choose how you will be identified in the company system.</p>
+      </header>
+      <form id="employeeNameForm">
+        <div class="access-input-label"><label for="employeeNameInput">EMPLOYEE NAME</label><span id="employeeNameHint">MAX 40 CHARACTERS</span></div>
+        <input id="employeeNameInput" type="text" maxlength="40" placeholder="Enter your name..." aria-describedby="employeeNameHint" required autofocus>
+        <p id="employeeNameMessage" class="form_message" role="status"></p>
+        <button class="access-action" type="submit">SAVE NAME <img src="assets/access/submit-name.svg" alt=""></button>
+        <button id="employeeNameLogout" type="button">LOG OUT</button>
+      </form>
+      <footer class="onboard-footer"><span>CONTINUUM / EMPLOYEE SERVICES</span><span>INTERNAL USE ONLY</span></footer>
+    </div>
+  </dialog>
+
+  <!--permission-->
+  <dialog id="permission_dialog" class="permission_dialog" aria-labelledby="permissionTitle" aria-describedby="permissionDescription" data-figma="147:38">
+    <header class="permission-header">
+      <p>EMPLOYEE RECORD / READ ONLY</p>
+      <h2 id="permissionTitle" class="access-title-line"><span class="access-title-text">ACCESS DENIED.</span></h2>
+    </header>
+    <div class="permission-body">
+      <p id="permissionDescription">Your employment has ended. You no longer have permission to modify this employee record.</p>
+      <div class="permission-actions">
+        <button type="button" data-close autofocus>CLOSE NOTICE <img src="assets/portal/close-notice.svg" alt=""></button>
+      </div>
+    </div>
+  </dialog>
+  <!-- 开发导航不属于 Figma，放在画布下方；以后可删除。 -->
+  <!--behaviour log：开发面板独立于固定画布-->
+  <dialog id="behaviourPanel" aria-labelledby="behaviourTitle">
+    <header>
+      <h2 id="behaviourTitle">Behaviour Log · DEV</h2>
+      <button id="closeBehaviourLog" type="button">Close</button>
+    </header>
+    <p>仅记录客观事件。清空日志不重置游戏；游戏 Reset 开始新 session。</p>
+    <p id="behaviourSessionInfo"></p>
+    <p id="cloudSyncStatus" role="status">Not signed in</p>
+    <div class="behaviourTools">
+      <button id="exportBehaviourLog" type="button">Export JSON</button>
+      <button id="clearBehaviourLog" type="button">清空日志</button>
+    </div>
+    <h3>Statistics · 统计来自原始日志</h3>
+    <pre id="behaviourStats"></pre>
+    <h3>Events · 显示最近 100 条，导出包含全部保留事件</h3>
+    <pre id="behaviourEvents"></pre>
+  </dialog>
+  <footer class="preview_tools" hidden>
+    <span>DEV Preview</span><label for="preview-page">Page</label>
+    <select id="preview-page"><option value="login">Login</option><option value="create">Create New Employee</option><option value="work">Work</option><option value="database">Employee Database</option><option value="archive">Employee Archive</option><option value="permission">Access Denied</option><option value="complete">Profile Complete</option><option value="fired">Employment Terminated</option><option value="restricted">Former Employee Portal</option></select>
+    <button id="preview-logout">Log Out</button><button id="preview-next" hidden>Next (Preview)</button>
+    <button id="resetBalls" type="button" hidden>Reset</button>
+    <button id="openBehaviourLog" type="button">Behaviour Log</button>
+    <span id="preview-note" role="status"></span>
+  </footer>
+</body>
+
+</html>

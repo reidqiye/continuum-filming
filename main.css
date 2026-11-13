@@ -1,0 +1,3889 @@
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("assets/IBMPlexMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url("assets/Inter.ttf") format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Archivo Black";
+  src: url("assets/access/ArchivoBlack.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Archivo;
+  src: url("assets/access/Archivo.woff2") format("woff2");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Access Mono";
+  src: url("assets/access/IBMPlexMono-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+:root {
+  --ink: #181a17;
+  --line: 2px solid #000;
+  --page-gap: 1.35%;
+  --progress: 0%;
+  --stage-width: 1440px;
+  --stage-height: 900px;
+  --stage-scale: 1;
+  --stage-center-x: 50%;
+  --stage-center-y: 50%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  background: #fff;
+  color: #000;
+  font-family: "IBM Plex Mono", monospace;
+}
+
+button, input, select {
+  font: inherit;
+  color: inherit;
+  border-radius: 0;
+}
+
+button {
+  border: var(--line);
+  background: #fff;
+  cursor: pointer;
+}
+
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #666;
+  outline-offset: 4px;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+  font-weight: 400;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.page {
+  width: 100%;
+  height: var(--stage-height);
+  min-height: var(--stage-height);
+}
+
+/* Stage 01: employee access */
+.login_page, .access-dialog, .work-console, .database_page:not(.restricted), .profile-page, .employment-page,
+.portal-page, .permission_dialog {
+  --access-primary: #20242a;
+  --access-ink: #181a17;
+  --access-bg: #ededed;
+  --access-accent: #e4fc54;
+  --access-muted: #64665e;
+  --access-line: 2px solid var(--access-ink);
+  color: var(--access-ink);
+  background: var(--access-bg);
+}
+
+.login_page {
+  padding: 26px 33px 0 31px;
+  font-size: 10px;
+  line-height: 12.5px;
+}
+
+.access-header {
+  display: grid;
+  grid-template-columns: 468.67px 518.66px 253.67px 1fr;
+  height: 81px;
+}
+
+.access-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-left: 2px;
+  height: 48px;
+  font: 25px/31.25px "Archivo Black", sans-serif;
+  letter-spacing: -1.1px;
+}
+
+.access-brand sup {
+  font: 10px/12.5px Archivo, sans-serif;
+  letter-spacing: 0;
+  margin-left: -5px;
+}
+
+.access-mark {
+  position: relative;
+}
+
+.access-mark img + img {
+  position: absolute;
+  inset: 9px;
+}
+
+.access-network, .access-version {
+  padding-top: 6px;
+}
+
+.access-network p:first-child, .access-version p:first-child,
+.access-panel-label > span:first-child, .access-input-label label {
+  font-family: "Access Mono", monospace;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+.access-network p + p, .access-version p + p {
+  margin-top: 7.5px;
+  color: var(--access-muted);
+  font-size: 9px;
+}
+
+.access-terminal {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 12px;
+  border-left: var(--access-line);
+}
+
+.access-terminal strong {
+  font: 38px/47.5px "Archivo Black", sans-serif;
+  letter-spacing: -2px;
+}
+
+.access-terminal span {
+  font-size: 8px;
+  line-height: 12px;
+}
+
+.access-grid {
+  display: grid;
+  grid-template-columns: 740px 1fr;
+  grid-template-rows: 461px 205px;
+  border-top: var(--access-line);
+  border-left: var(--access-line);
+}
+
+.access-hero, .access-system {
+  position: relative;
+  padding: 26.5px 18px 0 30px;
+  border-right: var(--access-line);
+}
+
+.access-hero, .access-portal {
+  border-bottom: var(--access-line);
+}
+
+.access-hero {
+  background: var(--access-primary);
+  color: var(--access-bg);
+}
+
+.access-panel-label, .access-panel-foot, .access-input-label,
+.access-action, .access-legal, .onboard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.access-panel-label > span:first-child {
+  white-space: pre;
+}
+
+.access-hero h1 {
+  position: relative;
+  margin-top: 43px;
+  transform: translateY(-2px);
+  font: 112px/106px "Archivo Black", sans-serif;
+  letter-spacing: -7.7px;
+}
+
+.access-title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.access-title-text {
+  position: relative;
+  display: block;
+}
+
+.access-period {
+  position: absolute;
+  left: 464px;
+  color: var(--access-accent);
+}
+
+.access-tagline {
+  margin-top: 42px;
+  font: 19px/25px Archivo, sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.access-hero-arrow {
+  position: absolute;
+  left: 659.85px;
+  top: 335.95px;
+}
+
+.access-panel-foot {
+  border-top: 1px solid currentColor;
+  padding-top: 16px;
+  margin-top: 23px;
+  font-size: 9px;
+  line-height: 11.25px;
+}
+
+.access-system {
+  background: var(--access-accent);
+  padding-top: 24px;
+}
+
+.access-active {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  gap: 20px;
+  font: 96px/114px "Archivo Black", sans-serif;
+  letter-spacing: -6px;
+  margin-top: 5px;
+}
+
+.access-active::before {
+  content: "";
+  width: 23px;
+  height: 23px;
+  background: var(--access-ink);
+}
+
+.access-active span {
+  transform: translateY(-3px);
+}
+
+.access-system .access-panel-foot {
+  padding-top: 7.5px;
+  margin-top: 3px;
+}
+
+.access-portal, .access-onboarding {
+  padding: 27px 30px 0 42px;
+}
+
+.access-portal h2 {
+  margin-top: 61px;
+  font: 700 34px/34px Archivo, sans-serif;
+  letter-spacing: -1.4px;
+}
+
+.access-description {
+  margin-top: 12px;
+  font: 12px/16px Archivo, sans-serif;
+  color: var(--access-muted);
+}
+
+.login_form {
+  margin-top: 19.5px;
+}
+
+.access-input-label span {
+  color: var(--access-muted);
+}
+
+.login_form input, .onboard-sheet input {
+  display: block;
+  width: 100%;
+  height: 48px;
+  background: var(--access-bg);
+  border: var(--access-line);
+  padding: 0 14px;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.login_form input::placeholder, .onboard-sheet input::placeholder {
+  color: var(--access-muted);
+  opacity: 1;
+}
+
+.login_form input:focus, .onboard-sheet input:focus {
+  outline: none;
+  background: var(--access-accent);
+}
+
+.login_form input:autofill:focus, .onboard-sheet input:autofill:focus {
+  box-shadow: inset 0 0 0 100px var(--access-accent);
+}
+
+.access-input-icon {
+  position: relative;
+  margin-top: 10px;
+}
+
+.access-input-icon + .access-input-label {
+  margin-top: 11.5px;
+}
+
+.access-input-icon + .access-input-label + .access-input-icon {
+  margin-top: 12px;
+}
+
+.login_form .access-input-icon input {
+  padding-right: 42px;
+}
+
+.access-input-icon img {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.access-action {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 0;
+  color: var(--access-bg);
+  background: var(--access-ink);
+  font: 500 13px/16.25px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+.access-action:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.login_submit {
+  margin-top: 8px;
+}
+
+.login_submit span {
+  font: 25px/31.25px Archivo, sans-serif;
+}
+
+.login_form .form_message {
+  margin-top: 13px;
+  color: var(--access-muted);
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.login_form .form_message:empty::before {
+  content: "▪ AWAITING VERIFICATION";
+}
+
+.login_form .form_message:not(:empty) {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.access-onboarding {
+  padding-top: 22.5px;
+}
+
+.access-onboarding .access-panel-label > span + span, .access-onboarding > p {
+  color: var(--access-muted);
+  font-size: 9px;
+}
+
+.access-onboarding button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 88px;
+  margin-top: 14px;
+  padding: 0 18px;
+  border: var(--access-line);
+  background: var(--access-accent);
+  text-align: left;
+  font: 27px/27px "Archivo Black", sans-serif;
+  letter-spacing: -1px;
+}
+
+.access-onboarding button > span + span {
+  font: 57px/60px Archivo, sans-serif;
+}
+
+.access-create-label, .access-slide-text {
+  display: block;
+}
+
+.access-onboarding > p {
+  margin-top: 12px;
+}
+
+.access-metadata {
+  display: grid;
+  grid-template-columns: 386px 352px 352px 1fr;
+  height: 68px;
+  border: var(--access-line);
+}
+
+.access-metadata > p {
+  padding: 16px 16px 0;
+  font-size: 9px;
+  line-height: 11.25px;
+  letter-spacing: 0.3px;
+}
+
+.access-metadata > p + p {
+  border-left: 1px solid var(--access-ink);
+  padding-left: 17px;
+}
+
+.access-metadata p > span:not(.access-barcode) {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--access-muted);
+  font-size: 8px;
+  line-height: 10px;
+}
+
+.access-metadata .access-index {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding: 0 0 0 21px;
+  font-size: 8px;
+  letter-spacing: 0;
+}
+
+.access-barcode {
+  width: 61px;
+  height: 26px;
+  background: linear-gradient(to right,
+    var(--access-ink) 0 2px, transparent 2px 4px, var(--access-ink) 4px 5px, transparent 5px 7px,
+    var(--access-ink) 7px 10px, transparent 10px 12px, var(--access-ink) 12px 13px, transparent 13px 15px,
+    var(--access-ink) 15px 17px, transparent 17px 19px, var(--access-ink) 19px 23px, transparent 23px 25px,
+    var(--access-ink) 25px 27px, transparent 27px 29px, var(--access-ink) 29px 30px, transparent 30px 32px,
+    var(--access-ink) 32px 34px, transparent 34px 36px, var(--access-ink) 36px 39px, transparent 39px 41px,
+    var(--access-ink) 41px 42px, transparent 42px 44px, var(--access-ink) 44px 46px, transparent 46px 48px,
+    var(--access-ink) 48px 50px, transparent 50px 52px, var(--access-ink) 52px 53px, transparent 53px 55px,
+    var(--access-ink) 55px 58px, transparent 58px 60px, var(--access-ink) 60px);
+}
+
+.access-legal {
+  margin-top: 25px;
+  color: var(--access-muted);
+  line-height: 10px;
+  letter-spacing: 0.35px;
+}
+
+.form_message {
+  font-size: 12px;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+/* 公司主页三栏，中栏内部两行 Grid 放进度和工作空间。 */
+.company_page {
+  display: grid;
+  grid-template-columns: 20.54% minmax(0, 1fr) 14.86%;
+  gap: var(--page-gap);
+  padding: 22.32px 19.44px;
+  height: var(--stage-height);
+  min-height: 540px;
+}
+
+.taskPanel, .assistantPanel, .workPanel {
+  border: var(--line);
+  min-width: 0;
+}
+
+.taskPanel h1 {
+  font-size: 25.128px;
+  text-align: center;
+  margin-top: 21.6px;
+}
+
+.taskButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 57.6px;
+  margin: 66.24px 13% 0;
+}
+
+.taskButton {
+  text-align: left;
+  font-size: 52.272px;
+  padding: 0 10.08px;
+  line-height: 1.4;
+}
+
+.taskButton.selected {
+  background: var(--ink);
+  color: white;
+}
+
+.company_center {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-width: 0;
+}
+
+.profile_progress h2 {
+  font-size: 25.128px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress_track {
+  border: var(--line);
+  height: 42.48px;
+  min-height: 24px;
+  margin-top: 9.36px;
+}
+
+.progressFill {
+  width: var(--progress);
+  height: 100%;
+  background: var(--ink);
+}
+
+.progress_label {
+  width: 5em;
+  text-align: center;
+  margin-left: clamp(0px, calc(var(--progress) - 2.5em), calc(100% - 5em));
+  font-size: 25.128px;
+  line-height: 1.5;
+}
+
+.workPanel {
+  position: relative;
+}
+
+.assistantPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  min-height: 0;
+  padding: 14.4px;
+}
+
+.databaseButton {
+  flex-shrink: 0;
+  width: 70.128px;
+  min-width: 42px;
+  padding: 7.2px 3.6px;
+}
+
+.databaseButton img {
+  width: 100%;
+}
+
+.assistantAdvice {
+  width: 100%;
+  min-height: 0;
+  overflow: auto;
+  border: var(--line);
+  padding: 10px;
+  font-size: 16px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.assistantAdvice p + p, .assistantAdvice button {
+  margin-top: 8px;
+}
+
+#advisorName {
+  font-weight: bold;
+}
+
+.advisorRole, .assistantAdvice button {
+  font-size: 14px;
+}
+
+.gameWireframe {
+  height: 100%;
+  position: relative;
+  padding: 17.28px 6.4%;
+}
+
+/* B1：中央仍是一整块工作空间，不额外画传送带或拆分面板。 */
+.gameWireframe.ballPrototypeActive {
+  padding: 16px;
+}
+
+.ballPrototype {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  min-height: 0;
+}
+
+.ballToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.ballToolbar h2 {
+  font-size: 18.72px;
+}
+
+#ghostExampleLabel {
+  margin-right: auto;
+}
+
+.ballToolbar button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.ballPlayfield {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  touch-action: none;
+  user-select: none;
+}
+
+.ballLink {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 3;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.gameBall {
+  stroke: var(--ink);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+  cursor: grab;
+}
+
+.ballPlayfield.dragging, .ballPlayfield.dragging .gameBall {
+  cursor: grabbing;
+}
+
+#ghostDemo, #ghostDemo * {
+  pointer-events: none;
+}
+
+.ballInstructions {
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.order h2 {
+  font-size: 25.128px;
+  margin-bottom: 11.52px;
+}
+
+/* B2：恢复订单、右侧暂存框和底部五个出口。 */
+.company_center, .workPanel {
+  min-height: 0;
+}
+
+.screenReaderOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.ballClassificationActive > .order {
+  position: absolute;
+  top: 16px;
+  left: 6.4%;
+  right: 15%;
+  pointer-events: none;
+}
+
+.ballClassificationActive .order h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.ballClassificationActive .order-counts {
+  font-size: 17.28px;
+}
+
+.ballClassificationActive .ballToolbar {
+  justify-content: flex-end;
+}
+
+.ballClassificationActive .stagingArea {
+  pointer-events: none;
+}
+
+.ballClassificationActive .stagingArea h3 {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  width: 100%;
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.ballClassificationActive .stagingArea h3 span {
+  display: block;
+}
+
+.ballClassificationActive .stagingArea > div {
+  height: 100%;
+}
+
+.ballClassificationActive .sortingOutlets {
+  min-height: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ballClassificationActive .outletBorders > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ballClassificationActive .ballPlayfield {
+  position: relative;
+  z-index: 1;
+}
+
+.outletHint {
+  display: block;
+  width: 72%;
+  max-width: 100px;
+  height: auto;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.outletHint circle {
+  stroke: var(--ink);
+  stroke-width: 2;
+}
+
+.whiteHint {
+  fill: white;
+}
+
+.blackHint {
+  fill: var(--ink);
+}
+
+.ballClassificationActive .ballInstructions {
+  font-size: 11px;
+}
+
+.orderMet {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#orderFeedback {
+  min-height: 1.7em;
+}
+
+#orderFeedback[data-result="error"] {
+  text-decoration: underline;
+}
+
+.orderSymbols, .outletSymbols {
+  margin: 0 5.7%;
+}
+
+.orderSymbols img, .outletSymbols img {
+  width: 100%;
+}
+
+.order-counts {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+  font-size: 25.128px;
+  margin-top: 5.76px;
+}
+
+.stagingArea {
+  position: absolute;
+  top: 27%;
+  right: 12%;
+  text-align: center;
+  width: 14%;
+}
+
+.stagingArea h3 {
+  font-size: 18.864px;
+  line-height: 1.65;
+  margin-bottom: 7.2px;
+}
+
+.stagingArea div {
+  border: var(--line);
+  height: 59.76px;
+}
+
+.sortingOutlets {
+  position: absolute;
+  bottom: 8%;
+  left: 6.4%;
+  right: 6.4%;
+  height: 56.592px;
+  min-height: 32px;
+  display: grid;
+  align-items: center;
+}
+
+.outletBorders {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border: var(--line);
+}
+
+.outletBorders span + span {
+  border-left: var(--line);
+}
+
+/* 数据库保留八个卡片位置。 */
+.database_page {
+  position: relative;
+  padding: 48.96px 56.448px;
+}
+
+.employeeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px 43.92px;
+}
+
+#formerArchiveListStatus {
+  position: absolute;
+  top: 14px;
+  left: 56.448px;
+  font-size: 16.704px;
+}
+
+.employee-card {
+  border: var(--line);
+  aspect-ratio: 570 / 732;
+  min-width: 0;
+  text-align: center;
+  padding: 25.2px 0 23.04px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.employee-card .avatar {
+  width: 38.42%;
+  margin-bottom: 30.24px;
+}
+
+.employee-card .employee-id {
+  font-size: 25.128px;
+  white-space: nowrap;
+}
+
+.employee-card .expertise > span {
+  display: block;
+}
+
+.employee-card .employee-name {
+  font-size: 16.704px;
+  margin-top: 2.88px;
+  max-width: 90%;
+  overflow-wrap: anywhere;
+}
+
+.employee-card .expertise {
+  text-align: left;
+  width: 76%;
+  font-size: 18.864px;
+  line-height: 1.65;
+  margin-top: 14.4px;
+}
+
+.employee-card .status {
+  margin-top: auto;
+  font-size: 18.864px;
+  display: flex;
+  align-items: center;
+  gap: 14.4px;
+}
+
+.status img {
+  width: 16.272px;
+  min-width: 10px;
+}
+
+/* dialog 自带 Esc 关闭和焦点约束。 */
+dialog {
+  color: #000;
+  padding: 0;
+  background: #fff;
+  overflow: visible;
+  max-height: var(--stage-height);
+}
+
+dialog::backdrop {
+  background: rgb(255 255 255 / 78%);
+}
+
+.createDialog {
+  border: var(--line);
+  width: 466.272px;
+  min-width: 320px;
+  min-height: 543.6px;
+  padding: 21.6px 37.44px 43.2px;
+}
+
+.createDialog::backdrop {
+  background: #fff;
+}
+
+.createDialog header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.createDialog h2 {
+  font-size: 25.128px;
+  line-height: 1.65;
+}
+
+/* Stage 01: onboarding dialogs */
+.createDialog.access-dialog {
+  width: 1086px;
+  height: 612px;
+  padding: 0;
+  border: var(--access-line);
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.access-dialog[open] {
+  display: grid;
+  grid-template-columns: 445px 1fr;
+}
+
+.createDialog.access-dialog::backdrop {
+  background: rgb(32 36 42 / 70%);
+}
+
+.onboard-cover, .onboard-sheet {
+  position: relative;
+}
+
+.onboard-cover {
+  background: var(--access-primary);
+  color: var(--access-bg);
+}
+
+.onboard-eyebrow, .onboard-register {
+  position: absolute;
+  left: 29px;
+  right: 30px;
+  font-family: "Access Mono", monospace;
+  font-weight: 500;
+}
+
+.onboard-eyebrow {
+  top: 29px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid currentColor;
+  line-height: 16px;
+  letter-spacing: 0.55px;
+}
+
+.onboard-title {
+  position: absolute;
+  top: 117px;
+  left: 24px;
+  font: 64px/63px "Archivo Black", sans-serif;
+  letter-spacing: -4.2px;
+}
+
+.onboard-description {
+  position: absolute;
+  top: 270px;
+  left: 29px;
+  width: 345px;
+  font: 19px/27px Archivo, sans-serif;
+}
+
+.onboard-register {
+  top: 408px;
+  padding-top: 14px;
+  border-top: 1px solid currentColor;
+  font-size: 10px;
+  line-height: 13px;
+  letter-spacing: 0.35px;
+}
+
+.onboard-intake {
+  position: absolute;
+  inset: 462px 0 0;
+  display: grid;
+  grid-template-columns: 255px 1fr;
+  align-items: center;
+  padding-left: 20px;
+  background: var(--access-accent);
+  color: var(--access-ink);
+}
+
+.onboard-intake strong {
+  font: 97px/100px "Archivo Black", sans-serif;
+  letter-spacing: -6.5px;
+}
+
+.onboard-intake-title {
+  display: block;
+}
+
+.onboard-intake > div {
+  height: 100px;
+  padding: 5px 0 0 21px;
+  border-left: 1px solid var(--access-ink);
+}
+
+.onboard-intake b {
+  font: 700 19px/27px Archivo, sans-serif;
+  letter-spacing: -0.4px;
+}
+
+.onboard-intake p {
+  margin-top: 13px;
+  font-size: 10px;
+  line-height: 13px;
+  letter-spacing: 0.4px;
+}
+
+.onboard-sheet {
+  padding: 30px 27px 0 30px;
+  border-left: var(--access-line);
+}
+
+.onboard-sheet header {
+  display: block;
+  border-bottom: 1px solid var(--access-ink);
+  padding-bottom: 12px;
+}
+
+.onboard-sheet header > p:first-child {
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.onboard-sheet header h2 {
+  margin: 7px 0 0 -2px;
+  font: 700 36px/42px Archivo, sans-serif;
+  letter-spacing: -1.05px;
+}
+
+.onboard-sheet .closeButton {
+  position: absolute;
+  top: 26px;
+  right: 27px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: var(--access-line);
+  background: var(--access-bg);
+}
+
+.onboard-sheet .closeButton img {
+  position: static;
+  width: auto;
+}
+
+.onboard-sheet .access-input-label {
+  letter-spacing: 0.45px;
+}
+
+#registrationForm {
+  margin-top: 18px;
+}
+
+#registrationForm input {
+  height: 47px;
+  margin: 6px 0 16px;
+}
+
+#registrationForm .access-input-label span:last-child {
+  font-size: 10px;
+}
+
+#registrationPasswordHint {
+  margin-left: auto;
+  margin-right: 35px;
+  font-size: 9px;
+}
+
+.onboard-form-status {
+  margin-top: 26px;
+  color: var(--access-muted);
+}
+
+.onboard-form-status > p:first-child {
+  font: 500 9px/12px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+.onboard-sheet .form_message {
+  margin-top: 6px;
+  font: 14px/20px Archivo, sans-serif;
+}
+
+#registrationMessage:empty::before {
+  content: "All fields are required.";
+}
+
+.onboard-sheet .access-action {
+  position: absolute;
+  left: 30px;
+  right: 27px;
+  top: 461px;
+  width: auto;
+  height: 56px;
+  padding-left: 17px;
+  font-size: 15px;
+  line-height: 20px;
+}
+
+.onboard-footer {
+  position: absolute;
+  left: 30px;
+  right: 27px;
+  bottom: 18px;
+  height: 28px;
+  padding-top: 13px;
+  border-top: 1px solid var(--access-ink);
+  color: var(--access-muted);
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.25px;
+}
+
+#employeeNameDialog .onboard-sheet {
+  padding-top: 47px;
+}
+
+#employeeNameDialog .onboard-sheet header {
+  padding-bottom: 18px;
+}
+
+#employeeNameDialog .onboard-sheet h2 {
+  margin-top: 0;
+}
+
+#employeeNameDialog .onboard-sheet header p {
+  margin-top: 13px;
+  font: 17px/24px Archivo, sans-serif;
+}
+
+#employeeNameForm {
+  margin-top: 31px;
+}
+
+#employeeNameInput {
+  height: 58px;
+  margin-top: 9px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+#employeeNameDialog .access-action {
+  top: 406px;
+}
+
+#employeeNameLogout {
+  position: absolute;
+  left: 30px;
+  top: 481px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: 500 13px/18px "Access Mono", monospace;
+  text-decoration: underline;
+}
+
+.closeButton {
+  position: relative;
+  width: 41.04px;
+  min-width: 28px;
+  height: 41.04px;
+  min-height: 28px;
+  padding: 2.88px;
+}
+
+.closeButton img {
+  position: absolute;
+  width: 65%;
+  top: 17%;
+  left: 17%;
+}
+
+.closeButton img + img {
+  transform: scaleX(-1);
+}
+
+.createDialog dl {
+  text-align: center;
+  font-size: 25.128px;
+  margin: 61.92px 0 0;
+}
+
+.createDialog dt {
+  margin-bottom: 32.4px;
+}
+
+.createDialog dd {
+  margin: 0 0 51.84px;
+}
+
+.createDialog dd:last-child {
+  margin-bottom: 24.48px;
+}
+
+.wide_dialog {
+  width: 100%;
+  max-width: none;
+  border: var(--line);
+}
+
+.backButton {
+  position: absolute;
+  right: 3%;
+  bottom: calc(100% + 14.4px);
+  width: 4%;
+  min-width: 36px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.backButton img {
+  width: 100%;
+  transform: rotate(180deg);
+}
+
+#employeeNameDialog {
+  min-height: 0;
+}
+
+.preview_tools {
+  flex-shrink: 0;
+  border-top: 1px solid #ddd;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  min-height: 54px;
+}
+
+.preview_tools button, .preview_tools select {
+  padding: 4px 7px;
+  border: 1px solid #777;
+  background: white;
+}
+
+#preview-note {
+  color: #555;
+}
+
+/* fixed stage：16:10 固定布局，窗口变化时只整体等比缩放。 */
+#stageViewport {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #20242a url("assets/stage-background.png") center / cover no-repeat;
+}
+
+#application {
+  width: var(--stage-width);
+  height: var(--stage-height);
+  flex-shrink: 0;
+  transform: scale(var(--stage-scale));
+  transform-origin: center;
+}
+
+/* 原生 dialog 在顶层显示，单独使用同一比例与画面中心。 */
+dialog, .createDialog, .wide_dialog {
+  position: fixed;
+  inset: auto;
+  left: var(--stage-center-x);
+  top: var(--stage-center-y);
+  margin: 0;
+  max-width: none;
+  max-height: var(--stage-height);
+  transform: translate(-50%, -50%) scale(var(--stage-scale));
+  transform-origin: center;
+}
+
+.wide_dialog {
+  width: var(--stage-width);
+}
+
+/* behaviour log：只影响开发弹窗，不改变主画布布局。 */
+#behaviourPanel {
+  width: min(850px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  left: 50%;
+  top: 50%;
+  padding: 18px;
+  transform: translate(-50%, -50%);
+  overflow: auto;
+  border: var(--line);
+  font-size: 13px;
+}
+
+#behaviourPanel header, .behaviourTools {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#behaviourPanel h2, #behaviourPanel h3, #behaviourPanel p {
+  margin: 8px 0;
+}
+
+#behaviourSessionInfo {
+  overflow-wrap: anywhere;
+}
+
+#behaviourPanel button {
+  border: var(--line);
+  padding: 5px 10px;
+}
+
+#behaviourPanel pre {
+  border: var(--line);
+  padding: 10px;
+  margin: 8px 0 14px;
+  max-height: 210px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* C2：沿用档案四栏，仅把占位文字改成统计列表。 */
+.profileStatistics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px 18px;
+  font-size: 16.704px;
+}
+
+.profileStatistics dd {
+  margin: 0;
+  text-align: right;
+}
+/* Stage 02: Work / C v1.1 */
+.company_page.work-console {
+  position: relative;
+  display: block;
+  padding: 0;
+  color: var(--access-ink);
+  background: var(--access-bg);
+}
+
+.work-masthead, .work-titlebar, .work-chassis, .work-footer,
+.work-console .taskPanel, .work-console .workPanel, .work-console .assistantPanel,
+.work-console .profile_progress, .work-order-plate {
+  position: absolute;
+}
+
+.work-masthead {
+  inset: 20px 13px auto 15px;
+  display: grid;
+  grid-template-columns: 258px 214px 803px 1fr;
+  align-items: center;
+  height: 42px;
+}
+
+#company_page .work-masthead {
+  grid-template-columns: 258px 214px 587px 216px 1fr;
+}
+
+.work-masthead .access-brand {
+  height: 42px;
+  padding: 0;
+}
+
+.work-masthead-register {
+  height: 39px;
+  padding: 2px 0 0 28px;
+  border-left: 1px solid var(--access-muted);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.25px;
+}
+
+.work-masthead-register p + p {
+  margin-top: 6px;
+  color: var(--access-muted);
+  font: 9px/12px "IBM Plex Mono", monospace;
+  letter-spacing: 0;
+}
+
+.work-masthead .access-terminal {
+  height: 42px;
+  gap: 10px;
+  padding-left: 14px;
+}
+
+.work-masthead .access-terminal strong {
+  font-size: 37px;
+  line-height: 44px;
+}
+
+.work-chassis {
+  inset: 82px 13px 53px 15px;
+  background: var(--access-primary);
+}
+
+.work-titlebar {
+  top: 103px;
+  left: 34px;
+  width: 1374px;
+  height: 129px;
+  border: 2px solid var(--access-bg);
+  padding: 12px 17px;
+  color: var(--access-bg);
+}
+
+.work-titlebar > p {
+  font: 500 12px/15px "Access Mono", monospace;
+  letter-spacing: 0.35px;
+}
+
+.work-titlebar h1 {
+  margin: -3px 0 0 -5px;
+  font: 90px/99px "Archivo Black", sans-serif;
+  letter-spacing: -6px;
+}
+
+.work-titlebar h1 .access-title-text > span {
+  color: var(--access-accent);
+}
+
+.work-order-header {
+  position: absolute;
+  inset: 14px 0 auto 908px;
+  height: 99px;
+  padding: 0 20px;
+  border-left: 1px solid var(--access-bg);
+}
+
+.work-order-header h2 {
+  font: 700 35px/43px Archivo, sans-serif;
+  letter-spacing: -0.9px;
+}
+
+.work-order-header > div {
+  display: flex;
+  align-items: center;
+  gap: 43px;
+  margin-top: 3px;
+}
+
+.work-order-header > div p + p {
+  font-size: 10px;
+  line-height: 16px;
+}
+
+#workOrderTotal {
+  color: var(--access-accent);
+  font: 500 45px/53px "Access Mono", monospace;
+  letter-spacing: -1.7px;
+}
+
+.work-console .taskPanel {
+  top: 346px;
+  left: 34px;
+  width: 204px;
+  border: 0;
+  color: var(--access-bg);
+}
+
+.work-docket {
+  height: 170px;
+  padding-top: 13px;
+  border-top: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  font: 43px/49px "Archivo Black", sans-serif;
+  letter-spacing: -2.5px;
+}
+
+#workOrderNumber {
+  margin: -6px 0 0 -4px;
+  font-size: 101px;
+  line-height: 101px;
+  letter-spacing: -6.2px;
+}
+
+.work-console .taskPanel h1 {
+  margin: 10px 0 9px;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.work-console .taskButtons {
+  display: grid;
+  grid-template-columns: 102px 51px 51px;
+  gap: 0;
+  margin: 0;
+}
+
+.work-console .taskButton {
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--access-bg);
+  background: var(--access-ink);
+  color: var(--access-bg);
+  font: 500 14px/18px "Access Mono", monospace;
+  text-align: center;
+}
+
+.work-console .taskButton:first-child {
+  padding-left: 4px;
+  text-align: left;
+}
+
+.work-console .taskButton + .taskButton {
+  border-left: 0;
+}
+
+.work-console .taskButton.selected {
+  background: var(--access-accent);
+  color: var(--access-ink);
+}
+
+.work-console .profile_progress {
+  top: 592px;
+  left: 34px;
+  width: 204px;
+  height: 64px;
+  padding-top: 15px;
+  color: var(--access-bg);
+  border-top: 1px solid currentColor;
+}
+
+.work-console .profile_progress h2 {
+  width: 142px;
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.work-console #currentEmployee {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font: 10px/13px "IBM Plex Mono", monospace;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.work-console .progress_track {
+  height: 9px;
+  min-height: 0;
+  margin-top: 8px;
+  border: 1px solid var(--access-bg);
+}
+
+.work-console .progressFill {
+  background: var(--access-bg);
+}
+
+.work-console .progress_label {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  width: auto;
+  margin: 0;
+  font: 27px/32px "Archivo Black", sans-serif;
+  letter-spacing: -1.2px;
+}
+
+.work-order-plate {
+  top: 671px;
+  left: 24px;
+  width: 224px;
+  height: 163px;
+  padding: 25px 10px 0;
+  background: var(--access-accent);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+#workOrderPlateTotal {
+  margin-top: 8px;
+  font: 51px/59px "Archivo Black", sans-serif;
+  letter-spacing: -3.5px;
+}
+
+.work-order-plate p:last-child {
+  position: absolute;
+  inset: 123px 10px auto;
+  padding-top: 10px;
+  border-top: 1px solid currentColor;
+}
+
+.work-console .workPanel {
+  top: 345px;
+  left: 258px;
+  width: 908px;
+  height: 489px;
+  border: 0;
+}
+
+.work-console .workPanel::before {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 353px;
+  background: var(--access-bg);
+  content: "";
+}
+
+.work-console .gameWireframe {
+  padding: 0;
+}
+
+.work-console .gameWireframe > .order {
+  top: -104px;
+  left: -224px;
+  right: 0;
+}
+
+.work-console .order h2 {
+  margin: 0 0 10px 15px;
+  color: var(--access-bg);
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.work-console .order-counts {
+  height: 65px;
+  margin: 0;
+  padding: 7px 0;
+  text-align: left;
+  background: var(--access-bg);
+}
+
+.work-order-cell {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 22px 29px;
+  align-items: start;
+  padding: 0 26px 0 20px;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+.work-order-cell + .work-order-cell {
+  border-left: 1px solid var(--access-muted);
+}
+
+.work-order-cell [data-order] {
+  font: 500 24px/29px "Access Mono", monospace;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  transform-origin: left center;
+}
+
+.work-order-symbol {
+  position: relative;
+  display: flex;
+  justify-self: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+
+.work-order-symbol:has(img + img)::before {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: var(--access-ink);
+  content: "";
+}
+
+.work-order-symbol img {
+  position: relative;
+}
+
+.work-order-met {
+  display: flex;
+  visibility: hidden;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+  gap: 4px;
+  font-size: 10px;
+}
+
+.work-order-met::before {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--access-ink);
+  background: var(--access-accent);
+  content: "";
+}
+
+.work-order-cell .orderMet + .work-order-met {
+  visibility: visible;
+}
+
+.work-console .ballPlayfield {
+  position: absolute;
+  inset: 0;
+}
+
+.work-console .ballLink {
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.work-console .gameBall {
+  stroke-width: 2;
+}
+
+.work-console .gameBall[fill="#fff"], .work-console #ghostPair circle[fill="white"] {
+  fill: var(--access-bg);
+}
+
+/* Keep the demonstration glyphs round on the wide SVG viewport. */
+.work-console #ghostPair circle, .work-console #ghostGrip, .work-console #ghostCursor path {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scaleX(calc((489 / 800) / (908 / 1000)));
+}
+
+.work-console #ghostCursor path {
+  transform-origin: left center;
+}
+
+.work-console .ballToolbar, .work-console .ballInstructions {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  pointer-events: none;
+}
+
+.work-console .ballToolbar {
+  top: 14px;
+  right: 158px;
+  justify-content: space-between;
+}
+
+.work-console .ballToolbar h2, .work-console .assistantPanel > h2 {
+  font: 700 23px/29px Archivo, sans-serif;
+  letter-spacing: -0.6px;
+}
+
+.work-console .ballToolbar small {
+  color: var(--access-muted);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.work-console .ballInstructions {
+  top: 322px;
+  right: 16px;
+  font: 13px/18px Archivo, sans-serif;
+}
+
+.work-console #orderFeedback {
+  position: absolute;
+  bottom: 24px;
+  min-height: 0;
+  max-width: 100%;
+  color: var(--access-muted);
+  font: 11px/15px "IBM Plex Mono", monospace;
+}
+
+.work-console .stagingArea {
+  top: 14px;
+  left: 772px;
+  width: 137px;
+  height: 53px;
+  z-index: 2;
+}
+
+.work-console #stagingDrop {
+  border: 1px solid var(--access-primary);
+}
+
+.work-console .stagingArea h3 {
+  top: calc(100% + 8px);
+  bottom: auto;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 13px;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+}
+
+.work-console .stagingArea h3 span {
+  font-size: 10px;
+  letter-spacing: -1.1px;
+}
+
+.work-console .sortingOutlets {
+  top: 390px;
+  left: 0;
+  width: 908px;
+  height: 99px;
+}
+
+.work-outlet-title {
+  position: absolute;
+  left: 16px;
+  right: 12px;
+  bottom: calc(100% + 11px);
+  display: flex;
+  justify-content: space-between;
+  color: var(--access-bg);
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+.work-outlet-title span + span {
+  font: 10px/13px "IBM Plex Mono", monospace;
+  letter-spacing: 0;
+}
+
+.work-console .outletBorders {
+  border: 0;
+  background: var(--access-accent);
+}
+
+.work-console .outletBorders > [data-outlet] {
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  padding-top: 25px;
+  font: 500 18px/24px "Access Mono", monospace;
+  letter-spacing: -0.35px;
+}
+
+.work-console .outletBorders > [data-outlet] + [data-outlet] {
+  border-left: 1px solid var(--access-ink);
+}
+
+.work-console .outletBorders > span > span {
+  border: 0;
+}
+
+.work-console .assistantPanel {
+  top: 265px;
+  left: 1185px;
+  width: 223px;
+  height: 569px;
+  display: block;
+  padding: 7px 10px;
+  border: 0;
+  background: var(--access-bg);
+}
+
+.work-console .databaseButton, .work-console #showGhostExample {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  padding: 0 12px 0 8px;
+  border: var(--access-line);
+  background: var(--access-bg);
+  font: 500 12px/15px "Access Mono", monospace;
+  text-transform: uppercase;
+}
+
+.work-console .databaseButton {
+  height: 34px;
+  margin-top: 7px;
+}
+
+.work-console .work-action-arrow {
+  width: auto;
+}
+
+.work-console .assistantAdvice {
+  position: absolute;
+  inset: 94px 10px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  border: 0;
+  border-top: 1px solid var(--access-ink);
+  padding: 19px 0 108px;
+  width: auto;
+}
+
+.work-console .work-assistant-kicker {
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.3px;
+}
+
+.work-console #advisorName {
+  margin-top: 7px;
+  font: 700 22px/28px Archivo, sans-serif;
+  letter-spacing: -0.55px;
+}
+
+.work-console .advisorRole {
+  margin-top: 7px;
+  color: var(--access-muted);
+  font: 10px/14px "IBM Plex Mono", monospace;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+}
+
+.work-console #advisorName:empty, .work-console #advisorName:empty + .advisorRole {
+  display: none;
+}
+
+.work-console #advisorMessage {
+  margin-top: 13px;
+  min-height: 0;
+  max-height: 253px;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+  font: 14px/22px Archivo, sans-serif;
+}
+
+.work-console #advisorMessage:empty::before {
+  color: var(--access-muted);
+  content: "No contextual advice available.";
+}
+
+.work-console #showGhostExample {
+  position: absolute;
+  top: 393px;
+  height: 42px;
+  margin: 0;
+}
+
+.work-console #showGhostExample:not([hidden])::before {
+  position: absolute;
+  inset: -19px -2px auto;
+  height: 1px;
+  background: var(--access-muted);
+  content: "";
+}
+
+.work-console .work-replay-caption {
+  position: absolute;
+  top: 446px;
+  margin: 0;
+  color: var(--access-muted);
+  font: 9px/12px "IBM Plex Mono", monospace;
+}
+
+.work-console #showGhostExample[hidden] + .work-replay-caption,
+.work-console #assistantAdvice:not([hidden]) + .work-assistant-empty {
+  display: none;
+}
+
+.work-console .work-assistant-empty {
+  margin-top: 18px;
+  border-top: 1px solid var(--access-ink);
+  padding-top: 19px;
+  color: var(--access-muted);
+  font: 14px/22px Archivo, sans-serif;
+}
+
+.work-footer {
+  top: 867px;
+  left: 15px;
+  right: 13px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  color: var(--access-muted);
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.work-footer > p:last-child {
+  text-align: right;
+}
+
+/* Stage 03A: Database / B — Memory Rack */
+.database_page:not(.restricted) {
+  --rack-paper: #f8f8ee;
+  --rack-light-ink: #f2f1e9;
+  padding: 0;
+}
+
+.rack-masthead {
+  inset: 19px 32px auto;
+  height: 46px;
+  grid-template-columns: 265px 603px 174px 176px 28px 1fr;
+}
+
+.rack-masthead .access-brand {
+  padding-left: 1px;
+  transform: translateY(2px);
+}
+
+.rack-masthead .access-brand sup {
+  margin-left: 0;
+}
+
+.rack-masthead .work-masthead-register {
+  height: 45px;
+  padding-top: 8px;
+  border-color: var(--access-ink);
+}
+
+.rack-masthead .work-masthead-register p + p {
+  margin-top: 5px;
+}
+
+.rack-masthead .access-terminal {
+  grid-column: 6;
+  height: 46px;
+  padding-left: 13px;
+}
+
+.rack-masthead .access-terminal strong {
+  font-size: 36px;
+}
+
+.rack-record-mode {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.rack-record-mode::before {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--access-ink);
+  background: var(--access-accent);
+  content: "";
+}
+
+.rack-masthead #backToCompany, #workLogout {
+  position: static;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  width: 176px;
+  height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--access-ink);
+  background: transparent;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.15px;
+}
+
+.rack-titlebar {
+  position: absolute;
+  inset: 82px 32px auto;
+  height: 129px;
+  padding: 21px 21px 0;
+  background: var(--access-primary);
+  color: var(--rack-paper);
+}
+
+.rack-titlebar > p {
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.6px;
+}
+
+.rack-titlebar h1 {
+  margin: -2px 0 0 -8px;
+  font: 76px/83px "Archivo Black", sans-serif;
+  letter-spacing: -5.3px;
+}
+
+.rack-total {
+  position: absolute;
+  top: 25px;
+  left: 988px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  height: 79px;
+  padding-left: 19px;
+  border-left: 1px solid var(--rack-paper);
+}
+
+.rack-total strong {
+  min-width: 70px;
+  color: var(--access-accent);
+  font: 59px/64px "Archivo Black", sans-serif;
+  letter-spacing: -3.6px;
+}
+
+.rack-total p {
+  font: 500 11px/16px "Access Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+.database_page:not(.restricted) .employeeGrid {
+  position: absolute;
+  inset: 232px 32px auto;
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 35px) / 6);
+  gap: 7px;
+  height: 548px;
+  align-items: start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.database_page:not(.restricted) .employeeGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.database_page:not(.restricted) .employee-card {
+  --rack-head: var(--access-bg);
+  --rack-body: var(--access-bg);
+  --rack-text: var(--access-ink);
+  --rack-muted: var(--access-muted);
+  position: relative;
+  display: block;
+  height: 529px;
+  padding: 0;
+  border: 1px solid var(--access-ink);
+  aspect-ratio: auto;
+  text-align: left;
+  color: var(--rack-text);
+  background: var(--rack-body);
+}
+
+.database_page:not(.restricted) .employee-card:nth-child(even) {
+  --rack-head: var(--access-primary);
+  --rack-body: var(--access-ink);
+  --rack-text: var(--rack-light-ink);
+  --rack-muted: var(--rack-light-ink);
+}
+
+.database_page:not(.restricted) .employee-card:is([data-own-profile], button:hover) {
+  --rack-head: var(--access-accent);
+  --rack-body: var(--access-bg);
+  --rack-text: var(--access-ink);
+  --rack-muted: var(--access-muted);
+}
+
+.database_page:not(.restricted) .employee-card :is(.avatar, .expertise, .status) {
+  display: none;
+}
+
+.rack-head {
+  position: absolute;
+  inset: -1px -1px auto;
+  height: 149px;
+  padding: 18px 18px 0;
+  border: 1px solid var(--access-ink);
+  border-bottom-color: var(--rack-text);
+  background: var(--rack-head);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.6px;
+}
+
+.rack-head strong {
+  display: block;
+  margin: 7px 0 0 -6px;
+  font: 71px/78px "Archivo Black", sans-serif;
+  letter-spacing: -4.8px;
+}
+
+.rack-status-light {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--rack-text);
+}
+
+[data-employment="active"] .rack-status-light {
+  background: #1eff00;
+}
+
+[data-employment="terminated"] .rack-status-light {
+  background: #f00;
+}
+
+.database_page:not(.restricted) .employee-card :is(.rack-id-label, .employee-id, .employee-name, .rack-employment, .rack-orders, .rack-serial, .rack-empty-label) {
+  position: absolute;
+  left: 18px;
+  right: 20px;
+  margin: 0;
+  max-width: none;
+}
+
+.rack-id-label, .rack-empty-label {
+  top: 169px;
+  color: var(--rack-muted);
+  font: 9px/12px "IBM Plex Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+.database_page:not(.restricted) .employee-card .employee-id {
+  top: 187px;
+  font: 500 24px/28px "Access Mono", monospace;
+  letter-spacing: -0.8px;
+}
+
+.database_page:not(.restricted) .employee-card .employee-name {
+  top: 224px;
+  font: 700 17px/21px Archivo, sans-serif;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}
+
+.database_page:not(.restricted) .employee-card :is(.employee-id, .employee-name) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rack-employment {
+  top: 256px;
+  height: 31px;
+  border-bottom: 1px solid var(--rack-text);
+  color: var(--rack-muted);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.rack-orders {
+  top: 357px;
+  color: var(--rack-muted);
+  font: 9px/12px "IBM Plex Mono", monospace;
+}
+
+.rack-orders strong {
+  display: block;
+  margin-top: 7px;
+  color: var(--rack-text);
+  font: 500 22px/28px "Access Mono", monospace;
+}
+
+.rack-serial {
+  top: 414px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 11px;
+  border-top: 2px solid currentColor;
+  font: 500 10px/13px "Access Mono", monospace;
+}
+
+.rack-serial > span {
+  width: 83px;
+  height: 27px;
+  background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 5px,
+    currentColor 5px 6px, transparent 6px 8px, currentColor 8px 10px, transparent 10px 14px,
+    currentColor 14px 17px, transparent 17px 20px);
+}
+
+.rack-serial b {
+  font-weight: inherit;
+}
+
+.rack-open {
+  position: absolute;
+  inset: auto -1px -1px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 57px;
+  padding: 15px 19px 0 18px;
+  border: 1px solid var(--access-ink);
+  border-top-color: var(--rack-text);
+  background: var(--rack-head);
+  font: 500 12px/13px "Access Mono", monospace;
+  letter-spacing: 0.2px;
+}
+
+.rack-open img {
+  margin-top: 2px;
+}
+
+.rack-arrow-light,
+.employee-card:nth-child(even):not(:hover) .rack-arrow-dark {
+  display: none;
+}
+
+.employee-card:nth-child(even):not(:hover) .rack-arrow-light {
+  display: block;
+}
+
+.database_page:not(.restricted) button.employee-card:focus-visible {
+  outline: 2px solid var(--access-muted);
+  outline-offset: -3px;
+}
+
+.rack-access {
+  position: absolute;
+  inset: 782px 32px auto;
+  height: 51px;
+  padding: 9px 14px;
+  border: var(--access-line);
+}
+
+.rack-access > p:first-child {
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+.rack-access > p:nth-child(2) {
+  margin-top: 2px;
+  color: var(--access-muted);
+  font: 12px/15px Archivo, sans-serif;
+}
+
+#rackMyProfile {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 242px;
+  height: 31px;
+  padding: 0 7px 0 10px;
+  border: 1px solid var(--access-ink);
+  background: var(--access-accent);
+  font: 500 11px/14px "Access Mono", monospace;
+}
+
+.rack-masthead #backToCompany:hover, #rackMyProfile:hover {
+  text-decoration: underline;
+}
+
+.database_page:not(.restricted) #formerArchiveListStatus, #rackScrollHint {
+  position: absolute;
+  top: 800px;
+  left: 520px;
+  z-index: 1;
+  color: var(--access-muted);
+  font: 11px/15px "IBM Plex Mono", monospace;
+}
+
+#rackScrollHint {
+  top: 16px;
+  left: 486px;
+}
+
+.rack-footer {
+  inset: 845px 32px auto;
+  padding-top: 21px;
+  border-top: var(--access-line);
+  letter-spacing: 0.25px;
+}
+
+/* Stage G3B: Profile / E — Memory Unsealed */
+.profile-page {
+  --profile-paper: #f8f8ee;
+  --profile-chart-duration: 1500ms;
+  position: relative;
+}
+
+.profile-masthead::after {
+  position: absolute;
+  inset: 63px 0 auto;
+  border-top: var(--access-line);
+  content: "";
+}
+
+.profile-masthead .rack-record-mode {
+  grid-column: 3;
+}
+
+.profile-masthead button {
+  display: flex;
+  align-items: center;
+  height: 38px;
+  border: 1px solid var(--access-ink);
+  background: transparent;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.15px;
+}
+
+#backFromProfile {
+  grid-column: 4;
+  gap: 25px;
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+#editRestrictedArchive {
+  position: absolute;
+  top: 5px;
+  left: 708px;
+  width: 137px;
+  justify-content: space-between;
+  padding: 0 13px;
+}
+
+.profile-titlebar {
+  position: absolute;
+  inset: 111px 32px auto;
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.6px;
+}
+
+.profile-titlebar h1 {
+  margin: 3px 0 0 -4px;
+  font: 60px/66px "Archivo Black", sans-serif;
+  letter-spacing: -4.2px;
+}
+
+.profile-rack-reference {
+  position: absolute;
+  top: 2px;
+  left: 1042px;
+  height: 69px;
+  padding: 14px 0 0 17px;
+  border-left: 1px solid var(--access-ink);
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+.profile-rack-reference p + p {
+  margin-top: 9px;
+  color: var(--access-muted);
+  font: 10px/13px "IBM Plex Mono", monospace;
+  letter-spacing: 0.25px;
+}
+
+.profile-chassis {
+  position: absolute;
+  inset: 200px 32px auto;
+  height: 319px;
+  padding: 15px;
+  background: var(--access-ink);
+}
+
+.profile-identity {
+  display: grid;
+  grid-template-columns: 141px 453px 292px minmax(0, 1fr) 167px;
+  height: 102px;
+  outline: 1px solid var(--profile-paper);
+  outline-offset: -1px;
+  background: var(--access-primary);
+  color: var(--profile-paper);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+.profile-identity > div {
+  position: relative;
+  min-width: 0;
+  padding: 14px 18px 0;
+}
+
+.profile-identity .profile-slot {
+  padding: 13px 15px 0;
+  border: 1px solid var(--profile-paper);
+  background: var(--access-accent);
+  color: var(--access-ink);
+}
+
+.profile-slot strong {
+  display: block;
+  margin: -1px 0 0 -4px;
+  font: 66px/67px "Archivo Black", sans-serif;
+  letter-spacing: -4.6px;
+}
+
+.profile-id::before, .profile-employment::before {
+  position: absolute;
+  inset: 13px auto 13px 0;
+  border-left: 1px solid var(--profile-paper);
+  content: "";
+}
+
+#profileEmployeeName, #profileEmployeeId {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#profileEmployeeName {
+  margin-top: 6px;
+  font: 700 42px/48px Archivo, sans-serif;
+  letter-spacing: -0.7px;
+}
+
+#profileEmployeeId, #profileEmployeeStatus {
+  font: 500 26px/32px "Access Mono", monospace;
+  letter-spacing: -0.7px;
+}
+
+#profileEmployeeId, .profile-employment > div {
+  margin-top: 13px;
+}
+
+.profile-employment > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-transform: uppercase;
+}
+
+#profileStatusLight {
+  width: 11px;
+  height: 11px;
+  border: 1px solid var(--profile-paper);
+}
+
+#profileStatusLight[data-employment="active"] {
+  background: #1eff00;
+}
+
+#profileStatusLight[data-employment="terminated"] {
+  background: #f00;
+}
+
+#profileReadOnly {
+  position: absolute;
+  top: 48px;
+  right: 18px;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0;
+}
+
+.profile-identity .profile-serial {
+  padding: 27px 18px 0 19px;
+}
+
+.profile-serial > span {
+  display: block;
+  width: 115px;
+  height: 28px;
+  background: repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 5px,
+    currentColor 5px 6px, transparent 6px 8px, currentColor 8px 10px, transparent 10px 14px,
+    currentColor 14px 17px, transparent 17px 20px);
+}
+
+.profile-serial p {
+  margin-top: 8px;
+  letter-spacing: 0;
+}
+
+.profile-labour {
+  position: relative;
+  height: 175px;
+  margin-top: 12px;
+  background: var(--access-bg);
+}
+
+.profile-labour header {
+  position: absolute;
+  inset: 0 16px auto 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: 46px;
+  padding-top: 12px;
+  border-bottom: var(--access-line);
+}
+
+.profile-labour h2 {
+  font: 500 15px/20px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+#profileLoadStatus {
+  margin-top: 4px;
+  color: var(--access-muted);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+}
+
+#profileTapeNote, #profilePunchTape, .profile-counts {
+  position: absolute;
+  left: 17px;
+}
+
+#profileTapeNote {
+  top: 54px;
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+#profilePunchTape {
+  top: 74px;
+  display: grid;
+  grid-template-columns: repeat(64, 8px);
+  gap: 4px;
+}
+
+.profile-tape-empty-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--access-muted);
+  border-radius: 50%;
+}
+
+.profile-counts {
+  top: 114px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 764px;
+  height: 54px;
+  margin: 0;
+  border-right: 1px solid var(--access-ink);
+  text-align: center;
+}
+
+.profile-counts > div {
+  border-left: 1px solid var(--access-ink);
+}
+
+.profile-counts dt, .profile-outcomes dt {
+  font: 500 10px/13px "Access Mono", monospace;
+}
+
+.profile-counts dd, .profile-outcomes dd {
+  margin: 6px 0 0;
+  font: 500 29px/34px "Access Mono", monospace;
+  letter-spacing: -0.8px;
+}
+
+.profile-outcomes {
+  position: absolute;
+  inset: 72px 142px auto 851px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+
+.profile-outcomes > div {
+  position: relative;
+  padding-left: 17px;
+}
+
+.profile-outcomes > div::before {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--access-ink);
+  content: "";
+}
+
+.profile-outcomes > div + div::before {
+  border: 1px solid var(--access-ink);
+  background: var(--access-accent);
+}
+
+.profile-outcomes dt {
+  font-size: 12px;
+  line-height: 26px;
+}
+
+.profile-outcomes dd {
+  margin-top: 6px;
+}
+
+.profile-rate {
+  position: absolute;
+  top: 67px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 95px;
+  height: 95px;
+  border: 1px solid var(--access-muted);
+  border-radius: 50%;
+  font: 500 29px/34px "Access Mono", monospace;
+  letter-spacing: -0.6px;
+}
+
+.profile-rate[data-has-rate] {
+  border: 0;
+  background: url("assets/profile/ring-base.svg") center no-repeat;
+}
+
+.profile-rate[data-has-rate]::before {
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, var(--access-accent) 0 var(--profile-rate), transparent var(--profile-rate) 100%);
+  mask-image: radial-gradient(circle, transparent 35.5px, #000 36.5px);
+  content: "";
+}
+
+.profile-rate span {
+  position: relative;
+}
+
+.profile-rate .profile-rate-precise {
+  font-size: 18px;
+}
+
+.profile-introduction {
+  position: absolute;
+  inset: 519px 32px auto;
+  display: grid;
+  grid-template-columns: 299px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  height: 295px;
+  border: var(--access-line);
+}
+
+.profile-folio {
+  position: relative;
+  padding: 17px 20px 0 18px;
+  border-right: var(--access-line);
+  background: var(--access-accent);
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.profile-folio h2 {
+  margin: 15px 0 22px;
+  font: 700 31px/35px Archivo, sans-serif;
+  letter-spacing: -0.75px;
+}
+
+.profile-folio h2 + p {
+  padding-top: 13px;
+  border-top: 1px solid var(--access-ink);
+  font-size: 10px;
+  letter-spacing: 0.35px;
+}
+
+.profile-folio strong {
+  display: block;
+  margin-top: 3px;
+  font: 700 18px/23px Archivo, sans-serif;
+  letter-spacing: -0.3px;
+}
+
+.profile-folio > p:last-child {
+  position: absolute;
+  bottom: -4px;
+  left: 13px;
+  font: 70px/76px "Archivo Black", sans-serif;
+  letter-spacing: -5px;
+}
+
+.profile-reading {
+  display: grid;
+  grid-template-rows: 27px auto minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  padding: 15px 30px 14px 31px;
+}
+
+.profile-reading header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--access-ink);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+#profileIntroSource {
+  color: var(--access-muted);
+  font: 12px/16px Archivo, sans-serif;
+  letter-spacing: 0;
+}
+
+.profile-reading-body {
+  padding-top: 12px;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  font: 16px/21px Archivo, sans-serif;
+}
+
+.profile-introduction-copy {
+  position: relative;
+}
+
+.profile-introduction-copy > p {
+  white-space: pre-wrap;
+}
+
+.profile-introduction-copy.is-scrambling > :is(#aiIntroduction, #formerIntroduction) {
+  color: transparent;
+}
+
+#profileIntroductionMotion {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.profile-intro-title {
+  margin-top: 12px;
+  font: 38px/41px "Archivo Black", sans-serif;
+  letter-spacing: 0.45px;
+}
+
+#retryAiArchive {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: 1px solid var(--access-ink);
+  background: transparent;
+  font: 500 11px/14px "Access Mono", monospace;
+}
+
+.profile-access-note {
+  position: absolute;
+  inset: 824px 33px auto;
+  display: flex;
+  justify-content: space-between;
+  color: var(--access-muted);
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.35px;
+}
+
+#profileArchiveNote {
+  font: 12px/16px Archivo, sans-serif;
+  letter-spacing: 0;
+}
+
+/* Stage G4A: Corporate Achievement / Status Reassigned */
+.employment-page {
+  --employment-paper: #f8f8ee;
+  position: relative;
+}
+
+.employment-masthead {
+  top: 20px;
+  height: 48px;
+  grid-template-columns: 263px 727px 249px 1fr;
+}
+
+.employment-masthead::after {
+  position: absolute;
+  inset: 62px 0 auto;
+  border-top: var(--access-line);
+  content: "";
+}
+
+.employment-masthead .access-brand {
+  transform: none;
+}
+
+.employment-masthead .work-masthead-register, .employment-system {
+  align-self: start;
+  padding-top: 7px;
+  font: 500 10px/13px "Access Mono", monospace;
+  letter-spacing: 0.4px;
+}
+
+.employment-masthead .work-masthead-register {
+  height: 44px;
+  padding-left: 23px;
+  letter-spacing: 0.5px;
+}
+
+.employment-masthead .work-masthead-register p + p, .employment-system p + p {
+  margin-top: 6px;
+  color: var(--access-muted);
+  font: 9px/12px "IBM Plex Mono", monospace;
+  letter-spacing: 0.3px;
+}
+
+.employment-masthead .access-terminal {
+  grid-column: 4;
+  height: 48px;
+}
+
+.employment-masthead .access-terminal strong {
+  font: 38px/48px "Archivo Black", sans-serif;
+  letter-spacing: -2px;
+}
+
+.employment-sheet {
+  position: absolute;
+  inset: 102px 32px auto;
+  display: grid;
+  grid-template-columns: 851px 525px;
+  grid-template-rows: 637px 91px;
+}
+
+.employment-main, .employment-side {
+  position: relative;
+}
+
+.employment-main {
+  --employment-left: 32px;
+  --employment-right: 34px;
+}
+
+.employment-side {
+  --employment-left: 39px;
+  --employment-right: 41px;
+}
+
+.completion-progress {
+  background: var(--access-accent);
+  box-shadow: inset 2px 0 var(--access-ink), inset -2px 0 var(--access-ink), inset 0 2px var(--access-ink);
+}
+
+.completion-confirmation, .termination-notice {
+  background: var(--access-primary);
+  color: var(--employment-paper);
+}
+
+.termination-notice {
+  color: var(--access-bg);
+}
+
+.termination-retention {
+  box-shadow: -2px 0 var(--access-ink), inset 0 2px var(--access-ink), inset -2px 0 var(--access-ink);
+}
+
+.employment-register, .employment-panel-end {
+  position: absolute;
+  left: var(--employment-left);
+  right: var(--employment-right);
+}
+
+.employment-register {
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  height: 77px;
+  padding-top: 45px;
+  border-bottom: 1px solid currentColor;
+  font: 500 13px/17px "Access Mono", monospace;
+  letter-spacing: 0.65px;
+}
+
+.employment-register p + p {
+  margin-top: 1px;
+  font: 10px/13px "IBM Plex Mono", monospace;
+  letter-spacing: 0.5px;
+}
+
+.employment-side .employment-register {
+  padding-top: 46px;
+  font: 500 11px/15px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.employment-panel-end {
+  top: 559px;
+  padding-top: 19px;
+  border-top: 1px solid currentColor;
+  font: 500 12px/18px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+.employment-indicator {
+  padding: 17px 0 0 21px;
+  font-size: 15px;
+  line-height: 21px;
+  letter-spacing: 0.5px;
+}
+
+.employment-indicator::before {
+  position: absolute;
+  top: 23px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  background: currentColor;
+  content: "";
+}
+
+.completion-percent {
+  position: absolute;
+  top: 178px;
+  left: 28px;
+  font: 265px/272px "Archivo Black", sans-serif;
+  letter-spacing: -15px;
+}
+
+.completion-confirmation h1 {
+  position: absolute;
+  top: 214px;
+  left: 33px;
+  font: 65px/63px "Archivo Black", sans-serif;
+  letter-spacing: -3.7px;
+}
+
+.completion-description {
+  position: absolute;
+  top: 368px;
+  left: 39px;
+  width: 382px;
+  font: 19px/26px Archivo, sans-serif;
+}
+
+.termination-notice h1 {
+  position: absolute;
+  top: 156px;
+  left: 24px;
+  font: 105px/103px "Archivo Black", sans-serif;
+  letter-spacing: -6.2px;
+}
+
+.termination-description {
+  position: absolute;
+  top: 404px;
+  left: 32px;
+  font: 22px/31px Archivo, sans-serif;
+  letter-spacing: -0.2px;
+}
+
+.termination-notice .employment-indicator {
+  font-size: 13px;
+  line-height: 19px;
+  letter-spacing: 0.55px;
+}
+
+.termination-capture {
+  position: absolute;
+  inset: 100px 41px auto 39px;
+  display: flex;
+  justify-content: space-between;
+  height: 90px;
+  border-bottom: 1px solid var(--access-ink);
+}
+
+.termination-capture p {
+  margin-top: 30px;
+  color: var(--access-muted);
+  font: 500 12px/17px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.termination-capture strong {
+  margin-top: -1px;
+  font: 63px/69px "Archivo Black", sans-serif;
+  letter-spacing: -4.4px;
+}
+
+.termination-processing {
+  position: absolute;
+  inset: 224px 2px auto 0;
+  height: 122px;
+  padding: 17px 39px 0;
+  background: var(--access-accent);
+  font: 500 12px/17px "Access Mono", monospace;
+  letter-spacing: 0.7px;
+}
+
+.termination-processing h2 {
+  margin-top: 9px;
+  font: 47px/54px "Archivo Black", sans-serif;
+  letter-spacing: -2.6px;
+}
+
+.termination-log {
+  position: absolute;
+  top: 370px;
+  left: 39px;
+  font: 500 13px/18px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+.termination-log > div {
+  margin-top: 38px;
+  color: var(--access-muted);
+  font: 500 9px/13px "Access Mono", monospace;
+  letter-spacing: 0.35px;
+}
+
+.termination-log > div p + p {
+  margin-top: 9px;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.termination-log > div p:nth-child(2) {
+  margin-top: 7px;
+}
+
+.employment-receipt {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 851px 525px;
+  box-shadow: inset 0 0 0 2px var(--access-ink);
+}
+
+.employment-receipt dl {
+  display: grid;
+  grid-template-columns: 327px 1fr;
+  margin: 0;
+  border-right: 2px solid var(--access-ink);
+}
+
+.employment-receipt dl > div {
+  min-width: 0;
+  padding: 16px 27px 0;
+}
+
+.employment-receipt dl > div + div {
+  padding-left: 25px;
+  border-left: 1px solid var(--access-ink);
+}
+
+.employment-receipt dt {
+  color: var(--access-muted);
+  font: 500 10px/14px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.employment-receipt dd {
+  margin: 7px 0 0;
+  overflow: hidden;
+  font: 500 25px/33px "Access Mono", monospace;
+  letter-spacing: -0.6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.employment-receipt-action {
+  padding: 17px 25px 0 23px;
+}
+
+#complete_page .employment-receipt {
+  box-shadow: none;
+}
+
+#complete_page .employment-receipt dl {
+  box-shadow: inset 2px 0 var(--access-ink), inset 0 2px var(--access-ink), inset 0 -2px var(--access-ink);
+}
+
+#complete_page .employment-receipt-action {
+  box-shadow: inset -2px 0 var(--access-ink), inset 0 2px var(--access-ink), inset 0 -2px var(--access-ink);
+}
+
+.employment-receipt-action button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 55px;
+  padding: 0 16px;
+  border: 0;
+  background: var(--access-ink);
+  color: var(--employment-paper);
+  font: 500 17px/24px "Access Mono", monospace;
+  letter-spacing: 0.55px;
+}
+
+.employment-footer {
+  font-size: 9px;
+  line-height: 12px;
+}
+
+/* H2B-1: record confirmation, retention and read-only notice */
+@media (prefers-reduced-motion: no-preference) {
+  #complete_page:not([hidden]) .employment-receipt dl > div + div {
+    animation: terminal-record-confirmed 180ms linear;
+  }
+
+  #fired_page:not([hidden]) .termination-capture {
+    border-bottom-color: transparent;
+  }
+
+  #fired_page:not([hidden]) .termination-capture::after {
+    position: absolute;
+    inset: auto 0 -1px;
+    height: 1px;
+    background: var(--access-ink);
+    transform-origin: left;
+    pointer-events: none;
+    content: "";
+    animation: terminal-retention-line 220ms linear;
+  }
+
+  #permission_dialog[open]::backdrop {
+    animation: terminal-notice-in 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes terminal-record-confirmed {
+  from {
+    border-left-color: var(--access-accent);
+  }
+}
+
+@keyframes terminal-retention-line {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes terminal-notice-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Stage G4B: Former Employee Portal / Access Denied */
+.portal-page {
+  position: relative;
+}
+
+.portal-masthead {
+  height: 49px;
+  grid-template-columns: 262px 1fr 183px 130px;
+}
+
+.portal-masthead::after {
+  position: absolute;
+  inset: 63px 0 auto;
+  border-top: var(--access-line);
+  content: "";
+}
+
+.portal-masthead .access-brand {
+  transform: none;
+}
+
+.portal-masthead .work-masthead-register {
+  align-self: start;
+  height: 43px;
+  margin-top: 5px;
+  padding: 3px 0 0 27px;
+  font: 500 11px/14px "Access Mono", monospace;
+  letter-spacing: 0;
+}
+
+.portal-masthead .work-masthead-register p + p {
+  font: 10px/13px "IBM Plex Mono", monospace;
+}
+
+.portal-record-mode {
+  padding-right: 31px;
+  color: var(--access-muted);
+  font: 500 10px/13px "Access Mono", monospace;
+  text-align: right;
+}
+
+.portal-masthead .access-terminal {
+  grid-column: 4;
+  height: 43px;
+  padding-left: 15px;
+  gap: 14px;
+}
+
+.portal-masthead .access-terminal strong {
+  font: 35px/40px "Archivo Black", sans-serif;
+  letter-spacing: 0;
+}
+
+.portal-masthead .access-terminal span {
+  font: 9px/11px "IBM Plex Mono", monospace;
+}
+
+.portal-sheet {
+  position: absolute;
+  inset: 102px 32px auto;
+  display: grid;
+  grid-template-columns: 497px 1fr;
+  grid-template-rows: 250px 1fr;
+  row-gap: 3px;
+  height: 724px;
+  border: var(--access-line);
+}
+
+.portal-hero {
+  grid-column: 1 / -1;
+  padding: 36px 27px 0;
+  background: var(--access-primary);
+  color: var(--access-bg);
+}
+
+.portal-hero h1 {
+  margin-left: -5px;
+  transform: translateY(-3px);
+  font: 109px/124px "Archivo Black", sans-serif;
+  letter-spacing: -4px;
+}
+
+.portal-hero h1 .access-title-text > span {
+  color: var(--access-accent);
+}
+
+.portal-hero p {
+  margin-top: 11px;
+  padding-top: 20px;
+  border-top: 1px solid var(--access-muted);
+  font: 23px/30px Archivo, sans-serif;
+}
+
+.portal-identity {
+  position: relative;
+  padding: 34px 29px 0 27px;
+  border-right: var(--access-line);
+  box-shadow: inset 0 1px var(--access-ink);
+}
+
+.portal-identity dl, .portal-identity dd {
+  margin: 0;
+}
+
+.portal-identity dt, .portal-archive-status > p:first-child {
+  color: var(--access-muted);
+  font: 500 12px/16px "Access Mono", monospace;
+}
+
+#portalEmployeeName, #portalEmployeeId {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#portalEmployeeName {
+  margin: 8px 0 0 -3px;
+  font: 700 50px/55px Archivo, sans-serif;
+  letter-spacing: -1.5px;
+}
+
+.portal-identity dl > div:nth-child(2) {
+  margin-top: 22px;
+}
+
+#portalEmployeeId {
+  margin-top: 5px;
+  font: 500 27px/34px "Access Mono", monospace;
+}
+
+.portal-identity dl > div:last-child {
+  margin-top: 29px;
+  padding-top: 27px;
+  border-top: 1px solid var(--access-muted);
+}
+
+#portalEmploymentStatus {
+  margin: 7px 0 0 -1px;
+  font: 700 32px/39px Archivo, sans-serif;
+  text-transform: uppercase;
+}
+
+#portalLogout {
+  position: absolute;
+  bottom: 23px;
+  left: 27px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 180px;
+  height: 51px;
+  padding: 0 15px;
+  border: 1px solid var(--access-ink);
+  background: transparent;
+  font: 500 14px/19px "Access Mono", monospace;
+}
+
+.portal-archive {
+  display: grid;
+  grid-template-rows: 302px 67px 1fr;
+}
+
+.portal-access {
+  padding: 33px 30px 0;
+  background: var(--access-accent);
+}
+
+.portal-access > p:first-child {
+  font: 500 13px/17px "Access Mono", monospace;
+}
+
+.portal-access h2 {
+  margin: 21px 0 0 -7px;
+  transform: translateY(-2px);
+  font: 107px/118px "Archivo Black", sans-serif;
+  letter-spacing: -4px;
+}
+
+.portal-access > p:last-child {
+  margin-top: 19px;
+  padding-top: 25px;
+  border-top: 1px solid var(--access-ink);
+  font: 21px/27px Archivo, sans-serif;
+}
+
+.portal-archive-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 19px 30px 0;
+  border-block: var(--access-line);
+}
+
+.portal-archive-status > p:first-child {
+  margin-top: 2px;
+}
+
+#portalArchiveStatus {
+  font: 500 15px/21px "Access Mono", monospace;
+}
+
+.portal-action {
+  padding: 24px 30px 0;
+}
+
+#viewMyArchive {
+  display: grid;
+  grid-template-columns: 1fr 54px;
+  align-items: center;
+  width: 100%;
+  height: 51px;
+  padding: 0 0 0 18px;
+  border: 0;
+  background: var(--access-ink);
+  color: var(--access-bg);
+  font: 500 16px/22px "Access Mono", monospace;
+  text-align: left;
+}
+
+#viewMyArchive span {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  border-left: 1px solid var(--access-muted);
+}
+
+.portal-footer {
+  padding-top: 20px;
+  letter-spacing: 0;
+}
+
+.permission_dialog {
+  left: calc(var(--stage-center-x) + 1px * var(--stage-scale));
+  top: calc(var(--stage-center-y) + 54px * var(--stage-scale));
+  width: 660px;
+  height: 350px;
+  border: var(--access-line);
+}
+
+.permission_dialog::backdrop {
+  background: rgb(32 36 42 / 70%);
+}
+
+.permission-header {
+  height: 142px;
+  padding: 20px 30px 0 28px;
+  background: var(--access-primary);
+  color: var(--access-bg);
+}
+
+.permission-header p {
+  position: relative;
+  padding: 0 0 13px 19px;
+  border-bottom: 1px solid var(--access-muted);
+  color: var(--access-accent);
+  font: 500 13px/17px "Access Mono", monospace;
+}
+
+.permission-header p::before {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--access-accent);
+  content: "";
+}
+
+.permission-header h2 {
+  margin: 10px 0 0 -4px;
+  font: 60px/69px "Archivo Black", sans-serif;
+  letter-spacing: -2px;
+}
+
+.permission-body {
+  padding: 30px 30px 0 28px;
+}
+
+.permission-body > p {
+  width: 555px;
+  font: 19px/28px Archivo, sans-serif;
+}
+
+.permission-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28px;
+  padding-top: 21px;
+  border-top: 1px solid var(--access-muted);
+}
+
+.permission-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;
+  height: 43px;
+  padding: 0 16px 0 15px;
+  border: 0;
+  background: var(--access-ink);
+  color: var(--access-bg);
+  font: 500 13px/18px "Access Mono", monospace;
+}
+
+/* Button motion adapted from kennyotsu on Uiverse (see vendor/README.md). */
+button {
+  --button-accent: var(--access-accent, #e4fc54);
+  --button-ink: var(--access-ink, #181a17);
+}
+
+button:enabled:not(.employee-card):is(:hover, :focus-visible) {
+  background-color: var(--button-accent) !important;
+  color: var(--button-ink) !important;
+}
+
+button:enabled:not(.employee-card):is(:hover, :focus-visible) img {
+  filter: brightness(0) invert(10%);
+}
+
+/* H2A: terminal controls and modal feedback */
+@media (prefers-reduced-motion: no-preference) {
+  button:not(.employee-card) {
+    transition: background-color 300ms cubic-bezier(.23, 1, .32, 1),
+      color 300ms cubic-bezier(.23, 1, .32, 1),
+      box-shadow 300ms cubic-bezier(.23, 1, .32, 1);
+  }
+
+  .database_page button.employee-card {
+    transition: background-color 120ms ease-out, opacity 120ms ease-out;
+  }
+
+  button:enabled:not(.employee-card):is(:hover, :focus-visible) {
+    box-shadow: inset 0 2px 5px rgb(0 0 0 / 25%);
+  }
+
+  button:enabled:not(.employee-card):active {
+    box-shadow: none;
+  }
+
+  .login_form input, .onboard-sheet input {
+    transition: background-color 110ms ease-out;
+  }
+
+  :is(.access-dialog, .permission_dialog)[open]::backdrop {
+    animation: terminal-backdrop-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.database_page button.employee-card:enabled:active {
+  opacity: 0.78;
+}
+
+@keyframes terminal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* H2: terminal sequences */
+@property --archive-ring-fill {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+
+@property --archive-tape-scan {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 800;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    --terminal-arrival: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #login_page:not([hidden]) .access-hero {
+    animation: terminal-read-down 650ms var(--terminal-arrival) backwards;
+  }
+
+  #login_page:not([hidden]) .access-title-text,
+  #company_page:not([hidden]) .work-titlebar .access-title-text,
+  #company_page:not([hidden]) .progress_label .access-title-text,
+  #database_page:not([hidden]) .rack-titlebar .access-title-text,
+  #profile_page:not([hidden]) .access-title-text,
+  #fired_page:not([hidden]) #employmentTerminatedTitle .access-title-text,
+  #restricted_page:not([hidden]) #portalTitle .access-title-text,
+  #permission_dialog[open] .access-title-text,
+  #complete_page[data-completion-motion="revealing"] .access-title-text,
+  #createDialog[open] .access-title-text {
+    animation: access-title-rise 600ms var(--terminal-arrival) 100ms backwards;
+  }
+
+  #login_page:not([hidden]) .access-title-line + .access-title-line .access-title-text,
+  #company_page:not([hidden]) #workOrderTotal .access-title-text,
+  #createDialog[open] .access-title-line + .access-title-line .access-title-text {
+    animation-delay: 200ms;
+  }
+
+  #createDialog[open] .onboard-intake-title {
+    animation: access-title-rise 600ms var(--terminal-arrival) 200ms backwards;
+  }
+
+  #login_page:not([hidden]) .access-system {
+    animation: terminal-read-down 580ms var(--terminal-arrival) 140ms backwards;
+  }
+
+  #login_page:not([hidden]) .access-active > span {
+    animation: access-title-rise 600ms var(--terminal-arrival) 200ms backwards;
+  }
+
+  #login_page:not([hidden]) .access-portal > :not(form),
+  #login_page:not([hidden]) .login_form,
+  #login_page:not([hidden]) .access-onboarding {
+    animation: terminal-read-across 560ms var(--terminal-arrival) 240ms backwards;
+  }
+
+  #login_page:not([hidden]) :is(.access-create-label, .access-slide-text),
+  #company_page:not([hidden]) .access-slide-text,
+  #profile_page:not([hidden]) .access-slide-text,
+  #restricted_page:not([hidden]) .portal-access .access-slide-text,
+  #createDialog[open] .access-slide-text {
+    animation: access-label-slide 560ms var(--terminal-arrival) 240ms backwards;
+  }
+
+  #createDialog[open] .onboard-sheet header {
+    border-bottom-color: transparent;
+    background: linear-gradient(var(--access-ink), var(--access-ink)) left bottom / 100% 1px no-repeat border-box;
+    animation: access-line-slide 560ms var(--terminal-arrival) 240ms backwards;
+  }
+
+  #createProfile:focus-within .access-create-label,
+  body:has(.access-dialog[open]) #createProfile .access-create-label {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #login_page :is(.login_form, .access-onboarding):focus-within,
+  body:has(.access-dialog[open]) #login_page :is(.login_form, .access-onboarding) {
+    /* Keep the entrance timeline running when focus moves into a dialog. */
+    mask-image: none !important;
+  }
+
+  .access-dialog[open] .onboard-cover {
+    animation: terminal-read-across 650ms var(--terminal-arrival) backwards;
+  }
+
+  .access-dialog[open] .onboard-footer {
+    animation: terminal-read-across 560ms var(--terminal-arrival) 240ms backwards;
+  }
+
+  .access-dialog[open] .onboard-sheet::after {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: var(--access-accent);
+    pointer-events: none;
+    content: "";
+    animation: terminal-sheet-edge 740ms var(--terminal-arrival) both;
+  }
+
+  .work-console .progressFill {
+    width: 100%;
+    transform: scaleX(var(--progress));
+    transform-origin: left;
+    transition: transform 520ms var(--terminal-arrival);
+  }
+
+  #company_page:not([hidden]) .progress_track {
+    animation: terminal-read-across 560ms var(--terminal-arrival) 240ms backwards;
+  }
+
+  #complete_page[data-completion-motion="counting"] :is(.completion-confirmation, .employment-receipt-action) {
+    visibility: hidden;
+  }
+
+  #complete_page[data-completion-motion="revealing"] :is(.completion-confirmation, .employment-receipt-action) {
+    animation: terminal-read-across 600ms var(--terminal-arrival) backwards;
+  }
+
+  #database_page:not([hidden]) #employeeGrid {
+    /* Animate the stable scroll region, including when its card data arrives. */
+    animation: rack-slide-in 1000ms ease-out;
+  }
+
+  #profile_page:not([hidden]) #profilePunchTape:has(> img) {
+    animation: terminal-tape-scan 800ms linear;
+  }
+
+  #profilePunchTape > img {
+    opacity: clamp(0, calc((var(--archive-tape-scan) - var(--tape-dot-start)) / 28.5), 1);
+  }
+
+  #profile_page:not([hidden]) .profile-rate[data-has-rate]::before {
+    background: conic-gradient(from 90deg, var(--access-accent) 0 var(--archive-ring-fill),
+      transparent var(--archive-ring-fill) 100%);
+    animation: terminal-rate-fill var(--profile-chart-duration) var(--terminal-arrival) both;
+  }
+
+  #complete_page:not([hidden]) .employment-receipt dl > div + div {
+    animation: terminal-record-confirmed 230ms linear 500ms both;
+  }
+
+  #fired_page:not([hidden]) .termination-capture {
+    animation: terminal-read-across 420ms var(--terminal-arrival) 100ms backwards;
+  }
+
+  #fired_page:not([hidden]) .termination-capture::after {
+    animation-duration: 400ms;
+    animation-delay: 100ms;
+    animation-fill-mode: both;
+  }
+
+  #fired_page:not([hidden]) .termination-processing {
+    animation: terminal-read-across 490ms var(--terminal-arrival) 230ms backwards;
+  }
+
+  #restricted_page:not([hidden]) .portal-identity dl {
+    animation: terminal-read-down 440ms var(--terminal-arrival) backwards;
+  }
+
+  #restricted_page:not([hidden]) .portal-access {
+    animation: terminal-read-across 430ms var(--terminal-arrival) 110ms backwards;
+  }
+
+  #restricted_page:not([hidden]) .portal-archive-status,
+  #restricted_page:not([hidden]) .portal-action:not(:focus-within) {
+    animation: terminal-read-down 400ms var(--terminal-arrival) 220ms backwards;
+  }
+
+  #permission_dialog[open] .permission-header {
+    animation: terminal-reject 280ms steps(2, end);
+  }
+}
+
+/* 字 A：从下到上。字 B：从左到右。 */
+@keyframes access-title-rise {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@keyframes access-label-slide {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes access-line-slide {
+  from {
+    background-size: 0% 1px;
+  }
+}
+
+/* Masks keep the original layout and pointer hit areas. */
+@keyframes terminal-read-across {
+  from {
+    mask: linear-gradient(#000 0 0) left / 0% 100% no-repeat;
+  }
+  to {
+    mask: linear-gradient(#000 0 0) left / 100% 100% no-repeat;
+  }
+}
+
+@keyframes rack-slide-in {
+  from {
+    transform: translateX(100%);
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    transform: translateX(0);
+    clip-path: inset(0);
+  }
+}
+
+@keyframes terminal-read-down {
+  from {
+    mask: linear-gradient(#000 0 0) top / 100% 0% no-repeat;
+  }
+  to {
+    mask: linear-gradient(#000 0 0) top / 100% 100% no-repeat;
+  }
+}
+
+@keyframes terminal-sheet-edge {
+  from { transform: scaleY(0); transform-origin: top; }
+  72% { opacity: 1; }
+  to { transform: scaleY(1); transform-origin: top; opacity: 0; }
+}
+
+@keyframes terminal-rate-fill {
+  from { --archive-ring-fill: 0%; }
+  to { --archive-ring-fill: var(--profile-rate); }
+}
+
+@keyframes terminal-tape-scan {
+  from, to {
+    background-image: radial-gradient(circle at 4px 4px,
+      transparent 2.7px, var(--access-muted) 3px 3.5px, transparent 4px);
+    background-size: 12px 12px;
+  }
+  from { --archive-tape-scan: 0; }
+  to { --archive-tape-scan: 800; }
+}
+
+@keyframes terminal-reject {
+  from { box-shadow: inset 4px 0 var(--access-accent); }
+  to { box-shadow: inset 0 0 var(--access-accent); }
+}
