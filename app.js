@@ -49,30 +49,31 @@ function updateTerminationLog(pageName) {
 function updateCompletionCount(pageName) {
   let percent = document.querySelector(".completion-percent");
   let completePage = document.querySelector("#complete_page");
+  let progress = pageName === "work-ended" ? workSessionResult.progress : 100;
   if (completionCountTween) {
     completionCountTween.kill();
     completionCountTween = null;
   }
-  percent.textContent = "100%";
+  percent.textContent = progress + "%";
   delete completePage.dataset.completionMotion;
 
-  if (pageName !== "complete" || !window.gsap ||
+  if ((pageName !== "complete" && pageName !== "work-ended") || !window.gsap ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  // 只改变显示文字，进度条的真实值始终是 100%。
+  // 只改变显示文字，进度条保留实际结算值。
   let count = { value: 0 };
   percent.textContent = "0%";
-  completePage.dataset.completionMotion = "counting";
+  if (pageName === "complete") completePage.dataset.completionMotion = "counting";
   completionCountTween = window.gsap.to(count, {
-    value: 100,
+    value: progress,
     duration: 2,
     ease: "power2.out",
     onUpdate: function() {
       percent.textContent = Math.floor(count.value) + "%";
     },
     onComplete: function() {
-      percent.textContent = "100%";
-      completePage.dataset.completionMotion = "revealing";
+      percent.textContent = progress + "%";
+      if (pageName === "complete") completePage.dataset.completionMotion = "revealing";
       completionCountTween = null;
     }
   });
@@ -96,8 +97,7 @@ function showWorkSessionEnd(progress, profile) {
 function renderWorkSessionEnd(ended) {
   document.querySelector("#profileCompleteTitle").hidden = ended;
   document.querySelector(".completion-description").hidden = ended;
-  document.querySelector("#workEndedTitle").hidden = !ended;
-  document.querySelector("#workRemainingRequirements").hidden = !ended;
+  document.querySelector("#workEndedDetails").hidden = !ended;
   document.querySelector("#continueToTermination").hidden = ended;
   document.querySelector("#workEndedActions").hidden = !ended;
   document.querySelector(".completion-progress .employment-indicator").textContent =
@@ -232,11 +232,13 @@ function showPage(pageName) {
     page.hidden = page.id !== pageIds[pageName];
   });
   if (pageName === "profile" && previousPage !== "profile") playProfileIntroduction();
-  if (pageName !== previousPage && (pageName === "complete" || previousPage === "complete")) {
-    updateCompletionCount(pageName);
-  }
   if (pageName === "work-ended" || previousPage === "work-ended") {
     renderWorkSessionEnd(pageName === "work-ended");
+  }
+  if (pageName !== previousPage &&
+      (pageName === "complete" || previousPage === "complete" ||
+       pageName === "work-ended" || previousPage === "work-ended")) {
+    updateCompletionCount(pageName);
   }
   if (pageName !== previousPage && (pageName === "fired" || previousPage === "fired")) {
     updateTerminationLog(pageName);

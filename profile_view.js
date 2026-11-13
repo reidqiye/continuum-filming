@@ -17,7 +17,7 @@ function configureProfileView(mode, slot) {
   document.querySelector("#editRestrictedArchive").hidden = !restricted || cloudDevPreview;
   document.querySelector("#backFromProfile span").textContent = restricted ? "BACK TO PORTAL" : "BACK TO DATABASE";
   if (currentPage === "work-ended") {
-    document.querySelector("#backFromProfile span").textContent = "BACK TO SESSION SUMMARY";
+    document.querySelector("#backFromProfile span").textContent = "BACK TO SUMMARY";
   }
   document.querySelector(".profile-database-arrow").hidden = restricted;
   document.querySelector(".profile-portal-arrow").hidden = !restricted;

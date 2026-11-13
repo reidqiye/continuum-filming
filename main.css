@@ -3073,9 +3073,19 @@ dialog, .createDialog, .wide_dialog {
   font: 19px/26px Archivo, sans-serif;
 }
 
+#workEndedDetails {
+  position: absolute;
+  inset: 176px 41px auto 39px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#workEndedTitle {
+  position: static;
+}
+
 #workRemainingRequirements {
-  top: 362px;
-  width: 443px;
   font: 16px/23px Archivo, sans-serif;
 }
 
