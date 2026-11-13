@@ -3,6 +3,7 @@
 let currentPage = "login";
 let isFormerEmployee = false;
 let completedEmployeeId = null;
+let workSessionResult = null;
 let formerArchiveRequest = 0;
 let loginClockTimer = null;
 let completionCountTween = null;
@@ -87,6 +88,50 @@ function canShowEmploymentResult() {
   return cloudDevPreview || (cloudIdentity?.employee.status === "terminated" && completedEmployeeId === cloudIdentity.user.id);
 }
 
+function showWorkSessionEnd(progress, profile) {
+  workSessionResult = { progress: progress, profile: profile };
+  showPage("work-ended");
+}
+
+function renderWorkSessionEnd(ended) {
+  document.querySelector("#profileCompleteTitle").hidden = ended;
+  document.querySelector(".completion-description").hidden = ended;
+  document.querySelector("#workEndedTitle").hidden = !ended;
+  document.querySelector("#workRemainingRequirements").hidden = !ended;
+  document.querySelector("#continueToTermination").hidden = ended;
+  document.querySelector("#workEndedActions").hidden = !ended;
+  document.querySelector(".completion-progress .employment-indicator").textContent =
+    ended ? workOrderLimit + " ORDERS COMPLETED." : "ALL REQUIREMENTS MET.";
+  document.querySelector(".completion-confirmation .employment-panel-end").textContent =
+    ended ? "SESSION CLOSED" : "PROCESS COMPLETE";
+  document.querySelector("#completeRecordState").textContent = ended ? "IN PROGRESS" : "FINALIZED";
+  let percent = document.querySelector(".completion-percent");
+  let progress = ended ? workSessionResult.progress : 100;
+  percent.textContent = progress + "%";
+  percent.setAttribute("aria-valuenow", progress);
+  let list = document.querySelector("#workRemainingList");
+  list.replaceChildren();
+  if (!ended) return;
+  let profile = workSessionResult.profile;
+  let requirements = [];
+  if (!profile) {
+    requirements.push("Could not load the remaining requirements. Check your archive for saved progress.");
+  } else {
+    let groups = 20 - profile.classification_success;
+    let orders = 2 - profile.order_completed;
+    if (groups > 0) requirements.push("Classify " + groups + " more " + (groups === 1 ? "group." : "groups."));
+    if (orders > 0) requirements.push("Complete " + orders + " more " + (orders === 1 ? "order." : "orders."));
+    if (!profile.link_broken) requirements.push("Break a link between two balls.");
+    if (!profile.group_staged) requirements.push("Move a group into Staging.");
+    if (!profile.group_retrieved) requirements.push("Retrieve a group from Staging.");
+  }
+  for (let requirement of requirements) {
+    let item = document.createElement("li");
+    item.textContent = requirement;
+    list.appendChild(item);
+  }
+}
+
 const pages = document.querySelectorAll(".page");
 const previewSelect = document.querySelector("#preview-page");
 const previewNote = document.querySelector("#preview-note");
@@ -146,6 +191,9 @@ function renderRestrictedPortal() {
 
 // 修改 hidden 切换页面
 function showPage(pageName) {
+  if (pageName === "work" && workSessionResult) pageName = "work-ended";
+  if (pageName === "work-ended" && !workSessionResult) return;
+  if (pageName === "login") workSessionResult = null;
   if (pageName === "profile" && !profileMode) return;
   if (pageName === "restricted" && !canShowRestrictedPortal()) return;
   const employmentResult = pageName === "complete" || pageName === "fired";
@@ -155,6 +203,7 @@ function showPage(pageName) {
   if (!employmentResult) completedEmployeeId = null;
   let receiptId = "—";
   if (employmentResult && !cloudDevPreview) receiptId = cloudIdentity.employee.employee_code;
+  if (pageName === "work-ended" && cloudIdentity && !cloudDevPreview) receiptId = cloudIdentity.employee.employee_code;
   document.querySelector("#completeEmployeeId").textContent = receiptId;
   document.querySelector("#terminatedEmployeeId").textContent = receiptId;
   stopGhostExample();
@@ -176,6 +225,7 @@ function showPage(pageName) {
     restricted: "restricted_page",
     profile: "profile_page",
     complete: "complete_page",
+    "work-ended": "complete_page",
     fired: "fired_page"
   };
   pages.forEach(page => {
@@ -184,6 +234,9 @@ function showPage(pageName) {
   if (pageName === "profile" && previousPage !== "profile") playProfileIntroduction();
   if (pageName !== previousPage && (pageName === "complete" || previousPage === "complete")) {
     updateCompletionCount(pageName);
+  }
+  if (pageName === "work-ended" || previousPage === "work-ended") {
+    renderWorkSessionEnd(pageName === "work-ended");
   }
   if (pageName !== previousPage && (pageName === "fired" || previousPage === "fired")) {
     updateTerminationLog(pageName);
@@ -208,6 +261,7 @@ function showPage(pageName) {
     profile: "",
     restricted: "离职员工可查看自己的档案。",
     complete: "Profile 100% · 当前订单已完成。",
+    "work-ended": "Work session ended.",
     fired: "Employment terminated · 员工历史记录保留，重新登录后仅有查看权限。"
   };
 
@@ -238,13 +292,14 @@ document.querySelector("#retryAiArchive").addEventListener("click", function() {
 
 document.querySelector("#backFromProfile").addEventListener("click", function() {
   if (currentPage !== "profile") return;
-  if (canShowRestrictedArchiveEdit() || (cloudDevPreview && isFormerEmployee)) showPage("restricted");
+  if (profileMode === "own" && workSessionResult) showPage("work-ended");
+  else if (canShowRestrictedArchiveEdit() || (cloudDevPreview && isFormerEmployee)) showPage("restricted");
   else if (canReturnToWork()) showPage("database");
   else showPage("login");
 });
 
 function openOwnEmployeeProfile(slot = 1) {
-  if (currentPage !== "database" && currentPage !== "restricted") return;
+  if (currentPage !== "database" && currentPage !== "restricted" && currentPage !== "work-ended") return;
   if (!cloudDevPreview) {
     let expectedStatus = currentPage === "restricted" ? "terminated" : "active";
     if (cloudIdentity?.employee.status !== expectedStatus) return;
@@ -633,6 +688,16 @@ document.querySelector("#preview-logout").addEventListener("click", async functi
 
 document.querySelector("#workLogout").addEventListener("click", function() {
   if (currentPage !== "work") return;
+  if (cloudDevPreview) showPage("login");
+  else document.querySelector("#preview-logout").click();
+});
+
+document.querySelector("#workEndedArchive").addEventListener("click", function() {
+  if (currentPage === "work-ended") openOwnEmployeeProfile();
+});
+
+document.querySelector("#workEndedLogout").addEventListener("click", function() {
+  if (currentPage !== "work-ended") return;
   if (cloudDevPreview) showPage("login");
   else document.querySelector("#preview-logout").click();
 });

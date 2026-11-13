@@ -3073,6 +3073,28 @@ dialog, .createDialog, .wide_dialog {
   font: 19px/26px Archivo, sans-serif;
 }
 
+#workRemainingRequirements {
+  top: 362px;
+  width: 443px;
+  font: 16px/23px Archivo, sans-serif;
+}
+
+#workRemainingRequirements p {
+  font: 500 12px/18px "Access Mono", monospace;
+  letter-spacing: 0.45px;
+}
+
+#workRemainingList {
+  margin: 9px 0 0;
+  padding-left: 20px;
+}
+
+#workEndedActions {
+  display: grid;
+  grid-template-columns: 1fr 136px;
+  gap: 8px;
+}
+
 .termination-notice h1 {
   position: absolute;
   top: 156px;

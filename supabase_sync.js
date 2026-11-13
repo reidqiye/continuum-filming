@@ -101,6 +101,7 @@ function enterCloudPreview() {
 }
 
 async function beginCloudWork() {
+  if (workSessionResult) return false;
   if (cloudDevPreview) return true;
   let identity = cloudIdentity;
   let verified = await verifyCloudEmployee();
@@ -192,6 +193,11 @@ async function settleCloudOrder(sessionId, number) {
       if (!cloudIdentity || cloudDevPreview || behaviourSession.sessionId !== sessionId) return;
       showEmployeeCompletion();
       loadDigitalArchive();
+    } else if (number >= workOrderLimit) {
+      let profile = await loadEmployeeProfile();
+      if (behaviourSession.sessionId !== sessionId || orderNumber !== number || !canRecordCloudWork()) return;
+      cloudWorkEnabled = false;
+      showWorkSessionEnd(result.data.progress, profile);
     } else {
       resetClassification(false);
     }
@@ -333,9 +339,13 @@ async function loadEmployeeProfile() {
       if (result.data.length < 500) break;
       start += 500;
     }
-    if (identity !== cloudIdentity || request !== profileHistoryRequest || cloudDevPreview) return;
-    renderEmployeeProfile(calculateEmployeeProfile(events, sessions.count), true);
-    if (profileMode !== "former") status.textContent = "Statistics from saved events.";
+    if (identity !== cloudIdentity || cloudDevPreview) return;
+    let profile = calculateEmployeeProfile(events, sessions.count);
+    if (request === profileHistoryRequest) {
+      renderEmployeeProfile(profile, true);
+      if (profileMode !== "former") status.textContent = "Statistics from saved events.";
+    }
+    return profile;
   } catch (error) {
     if (identity === cloudIdentity && request === profileHistoryRequest && !cloudDevPreview && profileMode !== "former") {
       status.textContent = "Could not load saved history.";

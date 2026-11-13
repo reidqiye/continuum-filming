@@ -100,6 +100,7 @@ let supplyTypeIndex = 0;
 let recycledBalls = [];
 
 let orderNumber = 1;
+let workOrderLimit = 5;
 let nextOrderTimer = null;
 
 // Work C v1.1 的像素矩形，按 SVG 逻辑坐标交给原有映射。
@@ -726,8 +727,16 @@ function submitBallGroup(selectedId, outlet, completedDrag) {
 
 // 只重置本轮工作台；不清空日志，也不创建云端 Session。
 function startNextOrder() {
-  if (cloudDevPreview) resetClassification(false);
-  else if (canRecordCloudWork()) settleCloudOrder(behaviourSession.sessionId, orderNumber);
+  if (cloudDevPreview) {
+    let events = [];
+    for (let event of behaviourEvents) events.push({ event_type: event.eventType });
+    let profile = calculateEmployeeProfile(events, 1);
+    if (profile.progress === 100) showPage("complete");
+    else if (orderNumber >= workOrderLimit) showWorkSessionEnd(profile.progress, profile);
+    else resetClassification(false);
+  } else if (canRecordCloudWork()) {
+    settleCloudOrder(behaviourSession.sessionId, orderNumber);
+  }
 }
 
 //staging keeps IDs, colors and links

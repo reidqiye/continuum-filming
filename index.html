@@ -492,15 +492,24 @@
             <div class="employment-register"><p>EMPLOYEE PROFILE / CONFIRMATION</p></div>
             <h1 id="profileCompleteTitle" class="access-title-line"><span class="access-title-text">PROFILE<br>COMPLETE.</span></h1>
             <p class="completion-description">Your employee profile has been successfully completed.</p>
+            <h1 id="workEndedTitle" hidden>WORK SESSION<br>ENDED.</h1>
+            <div id="workRemainingRequirements" class="completion-description" hidden>
+              <p>REMAINING REQUIREMENTS</p>
+              <ul id="workRemainingList"></ul>
+            </div>
             <p class="employment-panel-end">PROCESS COMPLETE</p>
           </div>
           <div class="employment-receipt">
             <dl>
               <div><dt>EMPLOYEE ID</dt><dd id="completeEmployeeId">—</dd></div>
-              <div><dt>KNOWLEDGE RECORD</dt><dd>FINALIZED</dd></div>
+              <div><dt>KNOWLEDGE RECORD</dt><dd id="completeRecordState">FINALIZED</dd></div>
             </dl>
             <div class="employment-receipt-action">
               <button id="continueToTermination" type="button">CONTINUE <img src="assets/employment/continue-arrow.svg" alt=""></button>
+              <div id="workEndedActions" hidden>
+                <button id="workEndedArchive" type="button">VIEW MY ARCHIVE</button>
+                <button id="workEndedLogout" type="button">LOG OUT</button>
+              </div>
             </div>
           </div>
         </div>
